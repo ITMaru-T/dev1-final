@@ -6,7 +6,7 @@
     <title>Legendary Product</title>
     <link rel="stylesheet" href="../css/main.css">
 </head>
-<body>
+<body class="home-page">
     <nav class="top-nav" aria-label="Main navigation">
         <a class="nav-link active" href="../home/index.html" aria-current="page">Home</a>
         <a class="nav-link" href="../product/index.html">Product</a>
@@ -34,11 +34,95 @@
         <button class="slider-control" id="next-slide" aria-label="Show next rendering">&#10095;</button>
     </section>
 
-    <div class="container home-hero">
-        <h1>Introducing Our Legendary Product</h1>
-        <p>Experience the best quality and craftsmanship.</p>
-        <button class="buy-button">Buy Now</button>
-    </div>
+    <main class="home-sections">
+        <section class="content-section glass-panel" id="features">
+            <div class="section-heading">
+                <span class="eyebrow">Features</span>
+                <h2>Built for style, comfort, and everyday performance</h2>
+            </div>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <h3>Premium Materials</h3>
+                    <p>Thoughtfully selected finishes and textures create a warm, elevated feel in every interaction.</p>
+                </article>
+                <article class="feature-card">
+                    <h3>Smart Functionality</h3>
+                    <p>Engineered to balance visual appeal with practical use, making it effortless to live with daily.</p>
+                </article>
+                <article class="feature-card">
+                    <h3>Timeless Design</h3>
+                    <p>Modern lines, rounded edges, and refined proportions give the product a look that stays relevant.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="content-section photo-showcase" id="gallery">
+            <div class="section-heading centered-heading">
+                <span class="eyebrow">Photos</span>
+                <h2>See the product from every angle</h2>
+            </div>
+            <div class="photo-grid">
+                <figure class="photo-card glass-panel photo-large">
+                    <img src="../img/rendering1.jpeg" alt="Main hero rendering view">
+                </figure>
+                <figure class="photo-card glass-panel">
+                    <img src="../img/rendering2.jpeg" alt="Detailed rendering perspective">
+                </figure>
+                <figure class="photo-card glass-panel">
+                    <img src="../img/rendering3.jpeg" alt="Wide rendering composition">
+                </figure>
+                <figure class="photo-card glass-panel">
+                    <img src="../img/rendering4.jpeg" alt="Alternate rendering showcase">
+                </figure>
+            </div>
+        </section>
+
+        <section class="content-section split-section" id="buy-now">
+            <div class="glass-panel text-panel cta-panel">
+                <span class="eyebrow">Buy Now</span>
+                <h2>Ready to bring it home?</h2>
+                <p>Order today to get premium quality, standout design, and a polished experience from first click to final delivery.</p>
+                <div class="detail-list">
+                    <span>Fast checkout</span>
+                    <span>Secure payment</span>
+                    <span>Tracked shipping</span>
+                </div>
+                <a class="buy-button" href="../cart/index.html">Go to Cart</a>
+            </div>
+            <div class="glass-panel text-panel" id="product-details">
+                <span class="eyebrow">Product Details</span>
+                <h2>Everything you need to know</h2>
+                <ul class="details-grid">
+                    <li><strong>Finish:</strong> Soft matte presentation with warm, natural tones.</li>
+                    <li><strong>Construction:</strong> Durable build focused on longevity and dependable daily use.</li>
+                    <li><strong>Experience:</strong> Designed to feel premium, intuitive, and visually balanced.</li>
+                    <li><strong>Fit:</strong> Versatile styling that works across modern and classic spaces.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section glass-panel contact-section" id="contact-us">
+            <div class="section-heading centered-heading">
+                <span class="eyebrow">Contact Us</span>
+                <h2>Questions, partnerships, or custom requests?</h2>
+                <p>Reach out and we’ll help you find the right fit, answer product questions, or walk you through the next steps.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h3>Email</h3>
+                    <p>hello@legendaryproduct.com</p>
+                </div>
+                <div class="contact-card">
+                    <h3>Phone</h3>
+                    <p>(555) 240-1984</p>
+                </div>
+                <div class="contact-card">
+                    <h3>Hours</h3>
+                    <p>Mon – Fri · 9:00 AM – 6:00 PM</p>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <script>
         const cards = Array.from(document.querySelectorAll('.render-card'));
