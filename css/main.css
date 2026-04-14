@@ -35,13 +35,14 @@ a {
 
 .top-nav {
     position: fixed;
-    top: 28px;
+    top: 24px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 14px;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px 18px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.35);
@@ -54,9 +55,11 @@ a {
 .nav-link {
     text-decoration: none;
     color: #FFFDF5;
-    font-size: 1.1rem;
-    padding: 12px 24px;
+    font-size: 1.22rem;
+    padding: 14px 30px;
     border-radius: 999px;
+    line-height: 1;
+    white-space: nowrap;
     transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
 }
 
@@ -72,7 +75,7 @@ a {
 }
 
 .render-slider {
-    margin: 150px auto 0;
+    margin: 164px auto 0;
     width: min(1000px, 94vw);
     display: flex;
     align-items: center;
@@ -388,17 +391,25 @@ p {
 
 @media (max-width: 640px) {
     .top-nav {
-        width: calc(100vw - 28px);
-        gap: 8px;
-        padding: 10px;
+        top: 16px;
+        left: 14px;
+        right: 14px;
+        transform: none;
+        width: auto;
+        gap: 6px;
+        padding: 8px;
+        border-radius: 24px;
     }
 
     .nav-link {
-        padding: 10px 14px;
-        font-size: 0.98rem;
+        flex: 1 1 0;
+        text-align: center;
+        padding: 12px 10px;
+        font-size: 1rem;
     }
 
     .render-slider {
+        margin-top: 126px;
         width: 100%;
         gap: 8px;
     }
