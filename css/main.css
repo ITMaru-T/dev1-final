@@ -47,6 +47,101 @@ body {
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
+.render-slider {
+    margin: 150px auto 0;
+    width: min(1000px, 94vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.render-track {
+    position: relative;
+    width: min(760px, 76vw);
+    height: clamp(220px, 35vw, 380px);
+    z-index: 1;
+    touch-action: pan-y;
+}
+
+.render-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(560px, 62vw);
+    height: 100%;
+    margin: 0;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.28);
+    transition: transform 0.45s ease, opacity 0.45s ease;
+    pointer-events: none;
+}
+
+.render-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.render-card.is-active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    z-index: 3;
+}
+
+.render-card.is-left {
+    transform: translate(-84%, -48%) scale(0.88);
+    opacity: 0.72;
+    z-index: 2;
+}
+
+.render-card.is-right {
+    transform: translate(-16%, -48%) scale(0.88);
+    opacity: 0.72;
+    z-index: 2;
+}
+
+.render-card.is-hidden {
+    transform: translate(-50%, -50%) scale(0.82);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.slider-control {
+    position: relative;
+    z-index: 20;
+    width: 54px;
+    height: 54px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #FFFDF5;
+    font-size: 1.7rem;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.slider-control:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.container.home-hero {
+    min-height: auto;
+    margin-top: 24px;
+}
+
 .container {
     display: flex;
     flex-direction: column;
