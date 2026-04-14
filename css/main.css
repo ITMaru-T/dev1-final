@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Lora&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Instrument Serif', serif;
+    background: linear-gradient(to bottom, rgba(139, 69, 19, 0.8), rgba(139, 69, 19, 0.8)), url('path/to/your/wood-background.jpg');
+    background-size: cover;
+    color: #5C4438;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #FFFDF5;
+    animation: fadeIn 1s ease-in-out;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #F0E9E1;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.buy-button {
+    background: rgba(240, 233, 225, 0.8);
+    color: #5C4438;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.buy-button:hover {
+    background: rgba(255, 255, 255, 1);
+}
