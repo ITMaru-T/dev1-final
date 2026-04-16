@@ -135,6 +135,12 @@
                 maximumFractionDigits: 0
             });
 
+            // Read unit price and tax rate BEFORE applying any stored qty so
+            // the HTML always reflects qty=1 at this point.
+            const unitPrice = parseCurrency($subtotal.text());
+            const baseTax   = parseCurrency($tax.text());
+            const taxRate   = unitPrice > 0 ? baseTax / unitPrice : 0;
+
             const params = new URLSearchParams(window.location.search);
             const qtyFromQuery = parseInt(params.get('qty'), 10);
             let qtyFromStorage;
@@ -157,12 +163,6 @@
                 const normalizedQty = Math.min(Math.max(requestedQty, 1), maxQty || 1);
                 $cartQty.val(String(normalizedQty));
             }
-
-            const initialQty = Math.max(parseInt($cartQty.val(), 10) || 1, 1);
-            const startingSubtotal = parseCurrency($subtotal.text());
-            const startingTax = parseCurrency($tax.text());
-            const unitPrice = startingSubtotal / initialQty;
-            const taxRate = startingSubtotal > 0 ? startingTax / startingSubtotal : 0;
 
             const updateCartTotals = () => {
                 if (!cartHasItem) {
