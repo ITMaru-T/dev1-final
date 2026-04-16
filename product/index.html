@@ -21,11 +21,330 @@
     </nav>
 </header>
 
-	<div class="container">
-		<h1>Our Product</h1>
-		<p>Everything you need to know about quality, features, and craftsmanship.</p>
-		<button class="buy-button">Buy Now</button>
-	</div>
+    <section class="render-slider">
+        <button class="slider-control" id="prev-slide" aria-label="Previous rendering">&#10094;</button>
+
+        <div class="render-track" id="render-track">
+            <figure class="render-card" data-index="0">
+                <img src="../img/rendering1.jpeg" alt="Modular living room table in open configuration">
+            </figure>
+            <figure class="render-card" data-index="1">
+                <img src="../img/rendering2.jpeg" alt="Modular living room table with nested storage modules">
+            </figure>
+            <figure class="render-card" data-index="2">
+                <img src="../img/rendering3.jpeg" alt="Top-down rendering showing modular table layout options">
+            </figure>
+            <figure class="render-card" data-index="3">
+                <img src="../img/rendering4.jpeg" alt="Modular living room table styled in a modern interior">
+            </figure>
+        </div>
+
+        <button class="slider-control" id="next-slide" aria-label="Next rendering">&#10095;</button>
+    </section>
+
+    <main class="product-shell">
+        <section class="product-overview glass-panel">
+            <p class="breadcrumb">Home / Living Room / Tables</p>
+
+            <div class="retail-layout">
+                <aside class="product-gallery-card">
+                    <figure class="gallery-main">
+                        <img src="../img/rendering1.jpeg" alt="Main retail view of modular living room table">
+                    </figure>
+                    <div class="gallery-thumbs">
+                        <img src="../img/rendering1.jpeg" alt="Thumbnail view 1 of modular table">
+                        <img src="../img/rendering2.jpeg" alt="Thumbnail view 2 of modular table">
+                        <img src="../img/rendering3.jpeg" alt="Thumbnail view 3 of modular table">
+                        <img src="../img/rendering4.jpeg" alt="Thumbnail view 4 of modular table">
+                    </div>
+                </aside>
+
+                <section class="product-details-card">
+                    <span class="eyebrow">In Stock</span>
+                    <h1>Modular Living Room Table</h1>
+                    <p class="star-rating">★★★★★ <span>4.8 (214 reviews)</span></p>
+                    <p class="product-price">$899 <span class="price-note">or $75/mo for 12 months</span></p>
+                    <p class="short-description">
+                        A premium modular coffee table designed to adapt to everyday life. Rearrange sections for
+                        hosting, lounging, or compact living while keeping a clean modern aesthetic.
+                    </p>
+
+                    <ul class="retail-highlights">
+                        <li>Free white-glove delivery</li>
+                        <li>30-day risk-free returns</li>
+                        <li>2-year craftsmanship warranty</li>
+                    </ul>
+
+                    <div class="purchase-row">
+                        <label for="qty">Qty</label>
+                        <select id="qty" name="qty">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                        <a class="buy-button retail-buy-button" href="../cart/index.html">Add to Cart</a>
+                    </div>
+                </section>
+            </div>
+
+            <div class="product-meta-grid retail-meta-grid">
+                <article class="product-card">
+                    <h2>Specifications</h2>
+                    <ul class="product-specs">
+                        <li><strong>Dimensions:</strong> 48 in x 30 in x 16 in</li>
+                        <li><strong>Materials:</strong> Solid oak veneer + powder-coated steel</li>
+                        <li><strong>Weight:</strong> 52 lb (total)</li>
+                        <li><strong>Assembly:</strong> Tool-free module lock system</li>
+                    </ul>
+                </article>
+
+                <article class="product-card">
+                    <h2>Features</h2>
+                    <ul class="product-features">
+                        <li>Slide-and-lock modules for quick layout changes</li>
+                        <li>Hidden storage for remotes and accessories</li>
+                        <li>Scratch-resistant top coat for daily use</li>
+                        <li>Soft-radius edges for comfort and safety</li>
+                    </ul>
+                </article>
+
+                <article class="product-card">
+                    <h2>Shipping & Returns</h2>
+                    <ul class="product-features">
+                        <li>Ships in 2-4 business days</li>
+                        <li>Live order tracking included</li>
+                        <li>30-day return window</li>
+                        <li>Protected packaging and insured transit</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <section class="reviews-marquee" aria-label="Customer reviews">
+        <div class="reviews-track">
+            <article class="review-card glass-panel">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">AL</span>
+                        <span class="review-name">Ava L.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Beautiful finish and super easy to reconfigure. It instantly made my living room feel more polished.</p>
+            </article>
+
+            <article class="review-card glass-panel">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">MR</span>
+                        <span class="review-name">Mason R.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Looks premium and feels very sturdy in person. The build quality is better than I expected for the price.</p>
+            </article>
+
+            <article class="review-card glass-panel">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">JN</span>
+                        <span class="review-name">Jade N.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Perfect size for my apartment living room setup. The modular pieces make the space feel more flexible.</p>
+            </article>
+
+            <article class="review-card glass-panel">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">TK</span>
+                        <span class="review-name">Theo K.</span>
+                    </div>
+                    <span class="review-stars">★★★★</span>
+                </div>
+                <p>The modular sections are genuinely useful daily. I switch layouts depending on whether I’m working or hosting.</p>
+            </article>
+
+            <article class="review-card glass-panel">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">SP</span>
+                        <span class="review-name">Sofia P.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Delivery was smooth and packaging was excellent. Everything arrived protected and ready to assemble.</p>
+            </article>
+
+            <article class="review-card glass-panel">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">DH</span>
+                        <span class="review-name">Dylan H.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Love the simple modularity built into the design. It keeps the room looking clean with almost no effort.</p>
+            </article>
+
+            <article class="review-card glass-panel">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">EK</span>
+                        <span class="review-name">Emma K.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Clean modern look that matches all my furniture.</p>
+            </article>
+
+            <article class="review-card glass-panel">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">BC</span>
+                        <span class="review-name">Ben C.</span>
+                    </div>
+                    <span class="review-stars">★★★★</span>
+                </div>
+                <p>Assembly was quick, and instructions were clear. I had it set up in under 20 minutes.</p>
+            </article>
+
+            <article class="review-card glass-panel">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">LI</span>
+                        <span class="review-name">Lena I.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Great quality for the price—totally worth it.</p>
+            </article>
+
+            <article class="review-card glass-panel">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">OM</span>
+                        <span class="review-name">Owen M.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>My guests always ask where I bought this table. It always stands out without being too flashy.</p>
+            </article>
+
+            <article class="review-card glass-panel" aria-hidden="true">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">AL</span>
+                        <span class="review-name">Ava L.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Beautiful finish and super easy to reconfigure. It instantly made my living room feel more polished.</p>
+            </article>
+
+            <article class="review-card glass-panel" aria-hidden="true">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">MR</span>
+                        <span class="review-name">Mason R.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Looks premium and feels very sturdy in person. The build quality is better than I expected for the price.</p>
+            </article>
+
+            <article class="review-card glass-panel" aria-hidden="true">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">JN</span>
+                        <span class="review-name">Jade N.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Perfect size for my apartment living room setup. The modular pieces make the space feel more flexible.</p>
+            </article>
+
+            <article class="review-card glass-panel" aria-hidden="true">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">TK</span>
+                        <span class="review-name">Theo K.</span>
+                    </div>
+                    <span class="review-stars">★★★★</span>
+                </div>
+                <p>The modular sections are genuinely useful daily. I switch layouts depending on whether I’m working or hosting.</p>
+            </article>
+
+            <article class="review-card glass-panel" aria-hidden="true">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">SP</span>
+                        <span class="review-name">Sofia P.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Delivery was smooth and packaging was excellent. Everything arrived protected and ready to assemble.</p>
+            </article>
+
+            <article class="review-card glass-panel" aria-hidden="true">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">DH</span>
+                        <span class="review-name">Dylan H.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Love the simple modularity built into the design. It keeps the room looking clean with almost no effort.</p>
+            </article>
+
+            <article class="review-card glass-panel" aria-hidden="true">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">EK</span>
+                        <span class="review-name">Emma K.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Clean modern look that matches all my furniture.</p>
+            </article>
+
+            <article class="review-card glass-panel" aria-hidden="true">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">BC</span>
+                        <span class="review-name">Ben C.</span>
+                    </div>
+                    <span class="review-stars">★★★★</span>
+                </div>
+                <p>Assembly was quick, and instructions were clear. I had it set up in under 20 minutes.</p>
+            </article>
+
+            <article class="review-card glass-panel" aria-hidden="true">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">LI</span>
+                        <span class="review-name">Lena I.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>Great quality for the price—totally worth it.</p>
+            </article>
+
+            <article class="review-card glass-panel" aria-hidden="true">
+                <div class="review-top">
+                    <div class="review-user">
+                        <span class="review-avatar">OM</span>
+                        <span class="review-name">Owen M.</span>
+                    </div>
+                    <span class="review-stars">★★★★★</span>
+                </div>
+                <p>My guests always ask where I bought this table. It always stands out without being too flashy.</p>
+            </article>
+        </div>
+    </section>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="../javascript.js"></script>
 </body>
