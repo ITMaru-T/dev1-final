@@ -30,22 +30,10 @@ body {
 }
 
 .about-page {
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(94, 58, 34, 0.28) 0%,
-            rgba(94, 58, 34, 0.18) 10%,
-            rgba(255, 255, 255, 0) 20%,
-            rgba(255, 255, 255, 0.72) 28%,
-            rgba(255, 255, 255, 0.96) 34%,
-            #ffffff 40%,
-            #ffffff 100%
-        ),
-        url('../img/woodbackground.jpeg');
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: 100% 100%, cover;
-    background-attachment: scroll, fixed;
+    background: url('../img/woodbackground.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 a {
@@ -338,23 +326,6 @@ a {
 
 .contact-section {
     text-align: center;
-}
-
-
-.about-page {
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(70, 46, 29, 0.72) 0%,
-            rgba(70, 46, 29, 0.58) 18%,
-            rgba(255, 255, 255, 0.06) 42%,
-            rgba(255, 255, 255, 0.18) 100%
-        ),
-        url('../img/woodbackground.jpeg');
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: 100% 100%, cover;
-    background-attachment: scroll, fixed;
 }
 
 .about-shell {
