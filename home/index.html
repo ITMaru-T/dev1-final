@@ -7,14 +7,22 @@
     <link rel="stylesheet" href="../css/main.css">
 </head>
 <body class="home-page">
-    <nav class="top-nav" aria-label="Main navigation">
-        <a class="nav-link active" href="../home/index.html" aria-current="page">Home</a>
-        <a class="nav-link" href="../product/index.html">Product</a>
-        <a class="nav-link" href="../about/index.html">About</a>
+    <header class="site-header">
+    <nav class="top-nav">
+        <button class="nav-toggle" type="button">
+            <span class="nav-toggle-label">Menu</span>
+            <span class="nav-toggle-icon"><span></span><span></span><span></span></span>
+        </button>
+        <div class="nav-links" id="primary-navigation">
+            <a class="nav-link active" href="../home/index.html">Home</a>
+            <a class="nav-link" href="../product/index.html">Product</a>
+            <a class="nav-link" href="../about/index.html">About</a>
+        </div>
     </nav>
+</header>
 
-    <section class="render-slider" aria-label="Project renderings">
-        <button class="slider-control" id="prev-slide" aria-label="Show previous rendering">&#10094;</button>
+    <section class="render-slider">
+        <button class="slider-control" id="prev-slide">&#10094;</button>
 
         <div class="render-track" id="render-track">
             <figure class="render-card" data-index="0">
@@ -31,7 +39,7 @@
             </figure>
         </div>
 
-        <button class="slider-control" id="next-slide" aria-label="Show next rendering">&#10095;</button>
+        <button class="slider-control" id="next-slide">&#10095;</button>
     </section>
 
     <main class="home-sections">
@@ -123,74 +131,7 @@
             </div>
         </section>
     </main>
-
-    <script>
-        const cards = Array.from(document.querySelectorAll('.render-card'));
-        const prevButton = document.getElementById('prev-slide');
-        const nextButton = document.getElementById('next-slide');
-        const renderTrack = document.getElementById('render-track');
-        let activeIndex = 0;
-        let touchStartX = 0;
-        let touchStartY = 0;
-        const swipeThreshold = 50;
-
-        function showPrevious() {
-            activeIndex = (activeIndex - 1 + cards.length) % cards.length;
-            paintSlides();
-        }
-
-        function showNext() {
-            activeIndex = (activeIndex + 1) % cards.length;
-            paintSlides();
-        }
-
-        function paintSlides() {
-            const total = cards.length;
-
-            cards.forEach((card, index) => {
-                card.classList.remove('is-active', 'is-left', 'is-right', 'is-hidden');
-
-                const offset = (index - activeIndex + total) % total;
-
-                if (offset === 0) {
-                    card.classList.add('is-active');
-                } else if (offset === 1) {
-                    card.classList.add('is-right');
-                } else if (offset === total - 1) {
-                    card.classList.add('is-left');
-                } else {
-                    card.classList.add('is-hidden');
-                }
-            });
-        }
-
-        prevButton.addEventListener('click', showPrevious);
-
-        nextButton.addEventListener('click', showNext);
-
-        renderTrack.addEventListener('touchstart', (event) => {
-            const touch = event.changedTouches[0];
-            touchStartX = touch.clientX;
-            touchStartY = touch.clientY;
-        }, { passive: true });
-
-        renderTrack.addEventListener('touchend', (event) => {
-            const touch = event.changedTouches[0];
-            const deltaX = touch.clientX - touchStartX;
-            const deltaY = touch.clientY - touchStartY;
-
-            if (Math.abs(deltaX) < swipeThreshold || Math.abs(deltaX) <= Math.abs(deltaY)) {
-                return;
-            }
-
-            if (deltaX < 0) {
-                showNext();
-            } else {
-                showPrevious();
-            }
-        }, { passive: true });
-
-        paintSlides();
-    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../javascript.js"></script>
 </body>
 </html>

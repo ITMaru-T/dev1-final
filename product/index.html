@@ -6,17 +6,27 @@
 	<title>Product</title>
 	<link rel="stylesheet" href="../css/main.css">
 </head>
-<body>
-	<nav class="top-nav" aria-label="Main navigation">
-		<a class="nav-link" href="../home/index.html">Home</a>
-		<a class="nav-link active" href="../product/index.html" aria-current="page">Product</a>
-		<a class="nav-link" href="../about/index.html">About</a>
-	</nav>
+<body class="product-page">
+	<header class="site-header">
+    <nav class="top-nav">
+        <button class="nav-toggle" type="button">
+            <span class="nav-toggle-label">Menu</span>
+            <span class="nav-toggle-icon"><span></span><span></span><span></span></span>
+        </button>
+        <div class="nav-links" id="primary-navigation">
+            <a class="nav-link" href="../home/index.html">Home</a>
+            <a class="nav-link active" href="../product/index.html">Product</a>
+            <a class="nav-link" href="../about/index.html">About</a>
+        </div>
+    </nav>
+</header>
 
 	<div class="container">
 		<h1>Our Product</h1>
 		<p>Everything you need to know about quality, features, and craftsmanship.</p>
 		<button class="buy-button">Buy Now</button>
 	</div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../javascript.js"></script>
 </body>
 </html>

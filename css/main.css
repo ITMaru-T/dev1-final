@@ -321,6 +321,153 @@ a {
     text-align: center;
 }
 
+
+.about-page {
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(70, 46, 29, 0.72) 0%,
+            rgba(70, 46, 29, 0.58) 18%,
+            rgba(255, 255, 255, 0.06) 42%,
+            rgba(255, 255, 255, 0.18) 100%
+        ),
+        url('../img/woodbackground.jpeg');
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100% 100%, cover;
+    background-attachment: scroll, fixed;
+}
+
+.about-shell {
+    width: min(1180px, 92vw);
+    margin: 150px auto 80px;
+    display: grid;
+    gap: 24px;
+}
+
+.about-hero {
+    border-radius: 32px;
+    padding: 40px;
+    max-width: 900px;
+}
+
+.about-hero h1 {
+    margin: 0 0 12px;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    line-height: 1.02;
+}
+
+.about-hero p {
+    max-width: 720px;
+    margin-bottom: 0;
+}
+
+.about-pills {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.about-pills span {
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    color: #FFF2E6;
+}
+
+.team-section {
+    border-radius: 32px;
+    padding: 36px;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.team-card {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    padding: 22px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.profile-mark {
+    width: 76px;
+    height: 76px;
+    border-radius: 22px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #FFFDF5;
+    background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.08)),
+        linear-gradient(135deg, rgba(139, 95, 71, 0.9), rgba(82, 55, 42, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+}
+
+.team-copy h3,
+.team-copy p {
+    margin: 0;
+}
+
+.team-role {
+    margin-top: 4px !important;
+    color: #F0E0D4;
+    font-size: 1rem;
+}
+
+.team-bio {
+    margin-top: 10px !important;
+    color: #F6EBDD;
+    line-height: 1.65;
+}
+
+.behind-the-scenes {
+    margin-top: 28px;
+}
+
+.small-heading {
+    margin-bottom: 16px;
+}
+
+.bts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.bts-card {
+    padding: 22px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.bts-card h4 {
+    margin: 0 0 10px;
+    color: #FFFDF5;
+    font-size: 1.12rem;
+}
+
+.bts-card p {
+    margin: 0;
+    color: #F0E9E1;
+    line-height: 1.65;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -373,15 +520,23 @@ p {
 
     .hero-panel,
     .content-section,
-    .text-panel {
+    .text-panel,
+    .about-hero,
+    .team-section {
         padding: 28px;
     }
 
     .feature-grid,
     .contact-grid,
     .split-section,
-    .photo-grid {
+    .photo-grid,
+    .team-grid,
+    .bts-grid {
         grid-template-columns: 1fr;
+    }
+
+    .team-card {
+        flex-direction: column;
     }
 
     .photo-large {
@@ -390,6 +545,17 @@ p {
 }
 
 @media (max-width: 640px) {
+    .about-shell {
+        margin-top: 126px;
+        width: min(94vw, 1180px);
+    }
+
+    .about-hero,
+    .team-section {
+        padding: 22px;
+        border-radius: 22px;
+    }
+
     .top-nav {
         top: 16px;
         left: 14px;
@@ -449,5 +615,285 @@ p {
     .secondary-button {
         width: 100%;
         box-sizing: border-box;
+    }
+}
+
+/* Mobile-first navigation and layout enhancements */
+.top-nav {
+    position: fixed;
+    top: 16px;
+    left: 14px;
+    right: 14px;
+    transform: none;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 24px;
+}
+
+.nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 18px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #FFFDF5;
+    font: inherit;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
+}
+
+.nav-toggle:focus-visible,
+.nav-link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.9);
+    outline-offset: 3px;
+}
+
+.nav-toggle-label {
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.nav-toggle-icon {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nav-toggle-icon span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+}
+
+.nav-links {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.top-nav.is-open .nav-links {
+    display: flex;
+}
+
+.nav-link {
+    width: 100%;
+    text-align: center;
+    padding: 12px 10px;
+    font-size: 1rem;
+}
+
+@media (max-width: 767px) {
+    .home-sections,
+    .about-shell {
+        width: min(94vw, 1180px);
+        margin-top: 120px;
+    }
+
+    .render-slider {
+        margin-top: 118px;
+        width: min(94vw, 1000px);
+        gap: 8px;
+    }
+
+    .render-track {
+        width: min(92vw, 560px);
+        height: 240px;
+    }
+
+    .slider-control {
+        width: 46px;
+        height: 46px;
+        font-size: 1.35rem;
+    }
+
+    .hero-panel,
+    .content-section,
+    .text-panel,
+    .about-hero,
+    .team-section {
+        padding: 22px;
+        border-radius: 22px;
+    }
+
+    .feature-grid,
+    .contact-grid,
+    .split-section,
+    .photo-grid,
+    .team-grid,
+    .bts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .photo-large {
+        grid-row: auto;
+    }
+
+    .about-hero,
+    .section-heading,
+    .centered-heading,
+    .contact-section {
+        text-align: center;
+    }
+
+    .about-pills,
+    .detail-list {
+        justify-content: center;
+    }
+}
+
+@media (min-width: 768px) {
+    .top-nav {
+        top: 24px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        width: fit-content;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        padding: 16px 18px;
+        border-radius: 999px;
+    }
+
+    .nav-toggle {
+        display: none;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        width: auto;
+    }
+
+    .nav-link {
+        width: auto;
+        font-size: 1.22rem;
+        padding: 14px 30px;
+        white-space: nowrap;
+    }
+}
+
+
+/* About page centered overrides */
+.about-page .about-shell {
+    width: min(1120px, 94vw);
+    margin: 128px auto 80px;
+    display: grid;
+    gap: 24px;
+    text-align: center;
+}
+
+.about-page .about-hero,
+.about-page .team-section {
+    max-width: none;
+    padding-left: clamp(22px, 4vw, 40px);
+    padding-right: clamp(22px, 4vw, 40px);
+}
+
+.about-page .about-hero h1,
+.about-page .section-heading,
+.about-page .centered-heading {
+    text-align: center;
+}
+
+.about-page .about-hero p,
+.about-page .section-heading p {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-page .about-pills {
+    justify-content: center;
+}
+
+.about-page .team-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+}
+
+.about-page .team-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.about-page .profile-mark {
+    margin-bottom: 4px;
+}
+
+.about-page .bts-image-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.about-page .bts-image-slot {
+    min-height: 220px;
+    border-radius: 24px;
+    border: 2px dashed rgba(255, 255, 255, 0.36);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
+        rgba(255, 255, 255, 0.08);
+    display: grid;
+    place-items: center;
+    color: #FFFDF5;
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 18px;
+}
+
+.about-page .bts-image-slot span {
+    max-width: 11ch;
+}
+
+@media (max-width: 900px) {
+    .about-page .team-grid,
+    .about-page .bts-image-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-page .team-card {
+        align-items: center;
+    }
+}
+
+@media (max-width: 767px) {
+    .about-page .about-shell {
+        margin-top: 118px;
+    }
+
+    .about-page .about-hero,
+    .about-page .team-section {
+        padding: 22px;
+        border-radius: 22px;
+    }
+
+    .about-page .bts-image-slot {
+        min-height: 180px;
     }
 }
