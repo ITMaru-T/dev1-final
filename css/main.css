@@ -29,6 +29,25 @@ body {
     background-attachment: scroll, fixed;
 }
 
+.about-page {
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(94, 58, 34, 0.28) 0%,
+            rgba(94, 58, 34, 0.18) 10%,
+            rgba(255, 255, 255, 0) 20%,
+            rgba(255, 255, 255, 0.72) 28%,
+            rgba(255, 255, 255, 0.96) 34%,
+            #ffffff 40%,
+            #ffffff 100%
+        ),
+        url('../img/woodbackground.jpeg');
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100% 100%, cover;
+    background-attachment: scroll, fixed;
+}
+
 a {
     color: inherit;
 }
@@ -476,7 +495,6 @@ a {
     min-height: calc(100vh - 130px);
     margin-top: 130px;
     text-align: center;
-    backdrop-filter: blur(10px);
     padding: 20px;
 }
 
