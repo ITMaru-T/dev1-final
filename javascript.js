@@ -138,25 +138,14 @@
                 $cartQty.val(String(Math.min(Math.max(requestedQty, 1), maxQty || 1)));
             }
 
-            const updateCartTotals = () => {
-                if (!cartHasItem) {
-                    return;
-                }
-
-                const qty = Math.max(parseInt($cartQty.val(), 10) || 1, 1);
-                const subtotal = Math.round(unitPrice * qty);
-                const estimatedTax = Math.round(subtotal * taxRate);
-                const deliveryCost = 215 + (qty - 1) * 150;
-                const shippingHandling = 55 + (qty - 1) * 40;
-                const orderTotal = subtotal + estimatedTax + deliveryCost + shippingHandling;
-                const itemLabel = qty === 1 ? 'Item' : 'Items';
-
             var updateCartTotals = function () {
                 if (!cartHasItem) return;
                 var qty           = Math.max(parseInt($cartQty.val(), 10) || 1, 1);
                 var subtotal      = Math.round(unitPrice * qty);
                 var estimatedTax  = Math.round(subtotal * taxRate);
-                var orderTotal    = subtotal + estimatedTax;
+                var deliveryCost = 215 + (qty - 1) * 150;
+                var shippingHandling = 55 + (qty - 1) * 40;
+                var orderTotal    = subtotal + estimatedTax + deliveryCost + shippingHandling;
                 var itemLabel     = qty === 1 ? 'Item' : 'Items';
                 $itemTotal.text(formatter.format(subtotal));
                 $subtotal.text(formatter.format(subtotal));
