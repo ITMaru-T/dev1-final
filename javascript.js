@@ -1,63 +1,66 @@
 (function ($) {
     $(function () {
-        $('.top-nav').each(function () {
-            const $nav = $(this);
-            const $toggle = $nav.find('.nav-toggle');
-            const $links = $nav.find('.nav-links');
 
-            if (!$toggle.length || !$links.length) {
-                return;
+        // ─── Scroll-aware nav ────────────────────────────────────────────────
+        // The nav starts transparent (great over the dark wood header).
+        // Once the user scrolls past 80 px it transitions to a solid dark-warm
+        // background so text stays readable over the white content sections.
+        var $nav = $('.top-nav');
+        var SCROLL_THRESHOLD = 80;
+
+        function updateNavOnScroll() {
+            if (window.scrollY > SCROLL_THRESHOLD) {
+                $nav.addClass('is-scrolled');
+            } else {
+                $nav.removeClass('is-scrolled');
             }
+        }
 
-            const closeMenu = () => {
-                $nav.removeClass('is-open');
-            };
+        $(window).on('scroll', updateNavOnScroll);
+        updateNavOnScroll(); // run once immediately on page load
 
-            $toggle.on('click', function () {
-                $nav.toggleClass('is-open');
-            });
+        // ─── Mobile hamburger toggle ─────────────────────────────────────────
+        $nav.each(function () {
+            var $n      = $(this);
+            var $toggle = $n.find('.nav-toggle');
+            var $links  = $n.find('.nav-links');
+
+            if (!$toggle.length || !$links.length) return;
+
+            var closeMenu = function () { $n.removeClass('is-open'); };
+
+            $toggle.on('click', function () { $n.toggleClass('is-open'); });
 
             $links.find('a').on('click', function () {
-                if (window.matchMedia('(max-width: 767px)').matches) {
-                    closeMenu();
-                }
+                if (window.matchMedia('(max-width: 767px)').matches) closeMenu();
             });
 
             $(window).on('resize', function () {
-                if (window.innerWidth >= 768) {
-                    closeMenu();
-                }
+                if (window.innerWidth >= 768) closeMenu();
             });
         });
 
-        const $cards = $('.render-card');
+        // ─── Image carousel ──────────────────────────────────────────────────
+        var $cards = $('.render-card');
         if ($cards.length) {
-            const $prevButton = $('#prev-slide');
-            const $nextButton = $('#next-slide');
-            const $renderTrack = $('#render-track');
-            let activeIndex = 0;
-            let touchStartX = 0;
-            let touchStartY = 0;
-            const swipeThreshold = 50;
+            var $prevButton    = $('#prev-slide');
+            var $nextButton    = $('#next-slide');
+            var $renderTrack   = $('#render-track');
+            var activeIndex    = 0;
+            var touchStartX    = 0;
+            var touchStartY    = 0;
+            var swipeThreshold = 50;
 
             function paintSlides() {
-                const total = $cards.length;
-
+                var total = $cards.length;
                 $cards.each(function (index) {
-                    const $card = $(this);
+                    var $card  = $(this);
+                    var offset = (index - activeIndex + total) % total;
                     $card.removeClass('is-active is-left is-right is-hidden');
-
-                    const offset = (index - activeIndex + total) % total;
-
-                    if (offset === 0) {
-                        $card.addClass('is-active');
-                    } else if (offset === 1) {
-                        $card.addClass('is-right');
-                    } else if (offset === total - 1) {
-                        $card.addClass('is-left');
-                    } else {
-                        $card.addClass('is-hidden');
-                    }
+                    if      (offset === 0)         $card.addClass('is-active');
+                    else if (offset === 1)         $card.addClass('is-right');
+                    else if (offset === total - 1) $card.addClass('is-left');
+                    else                           $card.addClass('is-hidden');
                 });
             }
 
@@ -74,107 +77,74 @@
             $prevButton.on('click', showPrevious);
             $nextButton.on('click', showNext);
 
-            $renderTrack.on('touchstart', function (event) {
-                const touch = event.originalEvent.changedTouches[0];
-                touchStartX = touch.clientX;
-                touchStartY = touch.clientY;
+            $renderTrack.on('touchstart', function (e) {
+                var t = e.originalEvent.changedTouches[0];
+                touchStartX = t.clientX;
+                touchStartY = t.clientY;
             });
 
-            $renderTrack.on('touchend', function (event) {
-                const touch = event.originalEvent.changedTouches[0];
-                const deltaX = touch.clientX - touchStartX;
-                const deltaY = touch.clientY - touchStartY;
-
-                if (Math.abs(deltaX) < swipeThreshold || Math.abs(deltaX) <= Math.abs(deltaY)) {
-                    return;
-                }
-
-                if (deltaX < 0) {
-                    showNext();
-                } else {
-                    showPrevious();
-                }
+            $renderTrack.on('touchend', function (e) {
+                var t      = e.originalEvent.changedTouches[0];
+                var deltaX = t.clientX - touchStartX;
+                var deltaY = t.clientY - touchStartY;
+                if (Math.abs(deltaX) < swipeThreshold || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+                if (deltaX < 0) showNext(); else showPrevious();
             });
 
             paintSlides();
         }
 
-        const $productQty = $('#qty');
-        const $addToCart = $('.retail-buy-button[href*="../cart/index.html"]');
+        // ─── Purchase page: save qty to localStorage ─────────────────────────
+        var $productQty = $('#qty');
+        var $addToCart  = $('.retail-buy-button[href*="../cart/index.html"]');
         if ($productQty.length && $addToCart.length) {
             $addToCart.on('click', function () {
-                const qty = Math.max(parseInt($productQty.val(), 10) || 1, 1);
-
-                try {
-                    window.localStorage.setItem('cartQty', String(qty));
-                } catch (error) {
-                    // Ignore storage errors in restrictive browsing contexts.
-                }
+                var qty = Math.max(parseInt($productQty.val(), 10) || 1, 1);
+                try { window.localStorage.setItem('cartQty', String(qty)); } catch (e) {}
             });
         }
 
-        const $cartQty = $('#cart-qty');
+        // ─── Cart page ────────────────────────────────────────────────────────
+        var $cartQty = $('#cart-qty');
         if ($cartQty.length) {
-            const $itemTotal = $('#cart-item-total');
-            const $subtotal = $('#summary-subtotal');
-            const $tax = $('#summary-tax');
-            const $total = $('#summary-total');
-            const $delivery = $('#summary-delivery');
-            const $itemsCount = $('#cart-items-count');
-            const $itemCard = $('#cart-item-card');
-            const $emptyState = $('#empty-cart-state');
-            const $removeItem = $('#cart-remove-item');
-            const $checkoutButton = $('.checkout-button');
-            let cartHasItem = true;
+            var $itemTotal      = $('#cart-item-total');
+            var $subtotal       = $('#summary-subtotal');
+            var $tax            = $('#summary-tax');
+            var $total          = $('#summary-total');
+            var $delivery       = $('#summary-delivery');
+            var $itemsCount     = $('#cart-items-count');
+            var $itemCard       = $('#cart-item-card');
+            var $emptyState     = $('#empty-cart-state');
+            var $removeItem     = $('#cart-remove-item');
+            var $checkoutButton = $('.checkout-button');
+            var cartHasItem     = true;
 
-            const parseCurrency = (value) => Number(String(value).replace(/[^0-9.-]/g, '')) || 0;
-            const formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            });
+            var parseCurrency = function (v) { return Number(String(v).replace(/[^0-9.-]/g, '')) || 0; };
+            var formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
-            // Read unit price and tax rate BEFORE applying any stored qty so
-            // the HTML always reflects qty=1 at this point.
-            const unitPrice = parseCurrency($subtotal.text());
-            const baseTax   = parseCurrency($tax.text());
-            const taxRate   = unitPrice > 0 ? baseTax / unitPrice : 0;
+            var unitPrice = parseCurrency($subtotal.text());
+            var baseTax   = parseCurrency($tax.text());
+            var taxRate   = unitPrice > 0 ? baseTax / unitPrice : 0;
 
-            const params = new URLSearchParams(window.location.search);
-            const qtyFromQuery = parseInt(params.get('qty'), 10);
-            let qtyFromStorage;
+            var params        = new URLSearchParams(window.location.search);
+            var qtyFromQuery  = parseInt(params.get('qty'), 10);
+            var qtyFromStorage;
+            try { qtyFromStorage = parseInt(window.localStorage.getItem('cartQty'), 10); } catch (e) { qtyFromStorage = NaN; }
 
-            try {
-                qtyFromStorage = parseInt(window.localStorage.getItem('cartQty'), 10);
-            } catch (error) {
-                qtyFromStorage = NaN;
-            }
-
-            const requestedQty = Number.isFinite(qtyFromQuery)
-                ? qtyFromQuery
-                : (Number.isFinite(qtyFromStorage) ? qtyFromStorage : NaN);
+            var requestedQty = Number.isFinite(qtyFromQuery) ? qtyFromQuery : (Number.isFinite(qtyFromStorage) ? qtyFromStorage : NaN);
 
             if (Number.isFinite(requestedQty)) {
-                const maxQty = Math.max(...$cartQty.find('option').map(function () {
-                    return parseInt($(this).val(), 10) || 1;
-                }).get());
-
-                const normalizedQty = Math.min(Math.max(requestedQty, 1), maxQty || 1);
-                $cartQty.val(String(normalizedQty));
+                var maxQty = Math.max.apply(null, $cartQty.find('option').map(function () { return parseInt($(this).val(), 10) || 1; }).get());
+                $cartQty.val(String(Math.min(Math.max(requestedQty, 1), maxQty || 1)));
             }
 
-            const updateCartTotals = () => {
-                if (!cartHasItem) {
-                    return;
-                }
-
-                const qty = Math.max(parseInt($cartQty.val(), 10) || 1, 1);
-                const subtotal = Math.round(unitPrice * qty);
-                const estimatedTax = Math.round(subtotal * taxRate);
-                const orderTotal = subtotal + estimatedTax;
-                const itemLabel = qty === 1 ? 'Item' : 'Items';
-
+            var updateCartTotals = function () {
+                if (!cartHasItem) return;
+                var qty           = Math.max(parseInt($cartQty.val(), 10) || 1, 1);
+                var subtotal      = Math.round(unitPrice * qty);
+                var estimatedTax  = Math.round(subtotal * taxRate);
+                var orderTotal    = subtotal + estimatedTax;
+                var itemLabel     = qty === 1 ? 'Item' : 'Items';
                 $itemTotal.text(formatter.format(subtotal));
                 $subtotal.text(formatter.format(subtotal));
                 $tax.text(formatter.format(estimatedTax));
@@ -184,37 +154,28 @@
 
             $cartQty.on('change input', updateCartTotals);
 
-            $removeItem.on('click', function (event) {
-                event.preventDefault();
-
+            $removeItem.on('click', function (e) {
+                e.preventDefault();
                 cartHasItem = false;
-                $itemCard.attr('hidden', true);
-                $itemCard.hide();
+                $itemCard.attr('hidden', true).hide();
                 $emptyState.removeAttr('hidden');
                 $itemsCount.text('Items (0)');
                 $itemTotal.text(formatter.format(0));
                 $subtotal.text(formatter.format(0));
                 $tax.text(formatter.format(0));
                 $total.text(formatter.format(0));
-
-                if ($delivery.length) {
-                    $delivery.text(formatter.format(0));
-                }
-
+                if ($delivery.length) $delivery.text(formatter.format(0));
                 if ($checkoutButton.length) {
-                    $checkoutButton.addClass('is-disabled');
-                    $checkoutButton.attr('aria-disabled', 'true');
-                    $checkoutButton.attr('tabindex', '-1');
+                    $checkoutButton.addClass('is-disabled').attr('aria-disabled', 'true').attr('tabindex', '-1');
                 }
             });
 
-            $checkoutButton.on('click', function (event) {
-                if ($(this).hasClass('is-disabled')) {
-                    event.preventDefault();
-                }
+            $checkoutButton.on('click', function (e) {
+                if ($(this).hasClass('is-disabled')) e.preventDefault();
             });
 
             updateCartTotals();
         }
+
     });
 })(jQuery);
