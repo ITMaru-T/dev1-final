@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Insights</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="about-page">
+    <header class="site-header">
+        <nav class="top-nav">
+            <button class="nav-toggle" type="button">
+                <span class="nav-toggle-label">Menu</span>
+                <span class="nav-toggle-icon"><span></span><span></span><span></span></span>
+            </button>
+            <div class="nav-links" id="primary-navigation">
+                <a class="nav-link" href="../home/index.html">Home</a>
+                <a class="nav-link" href="../purchase/index.html">Purchase</a>
+                <a class="nav-link" href="../about/index.html">About</a>
+                <a class="nav-link active" href="../business-insights/index.html">Business Insights</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="bi-shell">
+
+        <!-- Executive Summary -->
+        <section class="glass-panel bi-exec-summary">
+            <span class="eyebrow">Business Insights</span>
+            <h1>Redefining the Premium Furniture Market</h1>
+            <p>
+                The Modular Living Room Table represents a <strong>$847 billion opportunity</strong> at the
+                intersection of luxury interior design, smart home technology, and sustainable manufacturing.
+                Our proprietary modular architecture enables unprecedented customisation at scale, positioning
+                the brand for exponential growth across high-end residential and commercial segments worldwide.
+            </p>
+            <div class="about-pills">
+                <span>Luxury Segment</span>
+                <span>Smart Home Ready</span>
+                <span>Sustainable Materials</span>
+                <span>Global Distribution</span>
+            </div>
+        </section>
+
+        <!-- Canvas + Financial Projections -->
+        <div class="bi-two-col">
+
+            <!-- Business Model Canvas -->
+            <section class="glass-panel bi-card">
+                <div class="bi-card-heading">
+                    <span class="eyebrow">Strategy</span>
+                    <h2>Business Model Canvas</h2>
+                </div>
+                <div class="bmc-grid">
+                    <div class="bmc-cell bmc-partners">
+                        <span class="bmc-label">Key Partners</span>
+                        <ul>
+                            <li>Premium timber suppliers</li>
+                            <li>Smart-tech OEMs</li>
+                            <li>Interior design studios</li>
+                            <li>Luxury retail chains</li>
+                        </ul>
+                    </div>
+                    <div class="bmc-cell bmc-activities">
+                        <span class="bmc-label">Key Activities</span>
+                        <ul>
+                            <li>Modular R&amp;D</li>
+                            <li>Precision manufacturing</li>
+                            <li>Brand marketing</li>
+                        </ul>
+                    </div>
+                    <div class="bmc-cell bmc-resources">
+                        <span class="bmc-label">Key Resources</span>
+                        <ul>
+                            <li>Patented modular joints</li>
+                            <li>Artisan craftspeople</li>
+                            <li>DTC e-commerce platform</li>
+                        </ul>
+                    </div>
+                    <div class="bmc-cell bmc-value">
+                        <span class="bmc-label">Value Proposition</span>
+                        <ul>
+                            <li>Infinite configuration</li>
+                            <li>Heirloom-grade build quality</li>
+                            <li>Integrated smart surfaces</li>
+                            <li>White-glove delivery &amp; setup</li>
+                        </ul>
+                    </div>
+                    <div class="bmc-cell bmc-cr">
+                        <span class="bmc-label">Customer Relationships</span>
+                        <ul>
+                            <li>Personal concierge</li>
+                            <li>Lifetime warranty</li>
+                            <li>Design consultation</li>
+                        </ul>
+                    </div>
+                    <div class="bmc-cell bmc-channels">
+                        <span class="bmc-label">Channels</span>
+                        <ul>
+                            <li>Direct website</li>
+                            <li>Flagship showrooms</li>
+                            <li>Partner boutiques</li>
+                        </ul>
+                    </div>
+                    <div class="bmc-cell bmc-segments">
+                        <span class="bmc-label">Customer Segments</span>
+                        <ul>
+                            <li>Affluent homeowners</li>
+                            <li>Luxury hotels &amp; offices</li>
+                            <li>Interior architects</li>
+                        </ul>
+                    </div>
+                    <div class="bmc-cell bmc-cost">
+                        <span class="bmc-label">Cost Structure</span>
+                        <ul>
+                            <li>Materials &amp; craftsmanship (48%)</li>
+                            <li>R&amp;D &amp; product development (19%)</li>
+                            <li>Marketing &amp; brand (16%)</li>
+                            <li>Logistics &amp; fulfilment (17%)</li>
+                        </ul>
+                    </div>
+                    <div class="bmc-cell bmc-revenue-row">
+                        <span class="bmc-label">Revenue Streams</span>
+                        <ul>
+                            <li>Direct-to-consumer sales</li>
+                            <li>B2B commercial contracts</li>
+                            <li>Custom commission projects</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Financial Projections -->
+            <section class="glass-panel bi-card">
+                <div class="bi-card-heading">
+                    <span class="eyebrow">Forecast</span>
+                    <h2>Financial Projections</h2>
+                </div>
+                <p class="bi-chart-note">Projected annual revenue (USD millions) over five years based on 34.7% CAGR and current market penetration models.</p>
+                <div class="bi-chart-wrap">
+                    <canvas id="financialChart"></canvas>
+                </div>
+                <div class="bi-proj-milestones">
+                    <div class="bi-milestone">
+                        <span class="bi-milestone-year">Year 1</span>
+                        <span class="bi-milestone-val">$2.4M</span>
+                    </div>
+                    <div class="bi-milestone">
+                        <span class="bi-milestone-year">Year 2</span>
+                        <span class="bi-milestone-val">$8.7M</span>
+                    </div>
+                    <div class="bi-milestone">
+                        <span class="bi-milestone-year">Year 3</span>
+                        <span class="bi-milestone-val">$24.3M</span>
+                    </div>
+                    <div class="bi-milestone">
+                        <span class="bi-milestone-year">Year 4</span>
+                        <span class="bi-milestone-val">$61.8M</span>
+                    </div>
+                    <div class="bi-milestone">
+                        <span class="bi-milestone-year">Year 5</span>
+                        <span class="bi-milestone-val">$142.5M</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Revenue Streams + KPI Cards -->
+        <div class="bi-two-col bi-bottom-row">
+
+            <!-- Revenue Breakdown -->
+            <section class="glass-panel bi-card bi-revenue-card">
+                <div class="bi-card-heading">
+                    <span class="eyebrow">Revenue Mix</span>
+                    <h2>Revenue Breakdown</h2>
+                </div>
+                <div class="bi-revenue-inner">
+                    <div class="bi-donut-wrap">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                    <ul class="bi-legend">
+                        <li>
+                            <span class="bi-legend-dot" style="background:#7a5646;"></span>
+                            <span>Direct-to-Consumer</span>
+                            <strong>62%</strong>
+                        </li>
+                        <li>
+                            <span class="bi-legend-dot" style="background:#b8907a;"></span>
+                            <span>B2B &amp; Commercial</span>
+                            <strong>23%</strong>
+                        </li>
+                        <li>
+                            <span class="bi-legend-dot" style="background:#d4b09a;"></span>
+                            <span>Custom Commissions</span>
+                            <strong>15%</strong>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- KPI + CTA stack -->
+            <div class="bi-right-col">
+                <div class="bi-kpi-grid">
+                    <div class="glass-panel bi-kpi-card">
+                        <span class="bi-kpi-label">Projected ROI</span>
+                        <span class="bi-kpi-value">312%</span>
+                    </div>
+                    <div class="glass-panel bi-kpi-card">
+                        <span class="bi-kpi-label">Market Size</span>
+                        <span class="bi-kpi-value">$847B</span>
+                    </div>
+                    <div class="glass-panel bi-kpi-card">
+                        <span class="bi-kpi-label">Growth Rate</span>
+                        <span class="bi-kpi-value">34.7%<span class="bi-kpi-sub"> Annually</span></span>
+                    </div>
+                    <div class="glass-panel bi-kpi-card">
+                        <span class="bi-kpi-label">Year-5 Revenue</span>
+                        <span class="bi-kpi-value">$142.5M</span>
+                    </div>
+                    <div class="glass-panel bi-kpi-card">
+                        <span class="bi-kpi-label">Gross Margin</span>
+                        <span class="bi-kpi-value">68.4%</span>
+                    </div>
+                    <div class="glass-panel bi-kpi-card">
+                        <span class="bi-kpi-label">Target Markets</span>
+                        <span class="bi-kpi-value">38<span class="bi-kpi-sub"> Countries</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investing CTA -->
+        <section class="glass-panel bi-cta-section">
+            <div class="bi-cta-inner">
+                <span class="eyebrow">Partnerships &amp; Investment</span>
+                <h2>Interested in Investing?</h2>
+                <p>We are actively seeking visionary partners and investors who share our commitment to redefining the luxury furniture landscape. Get in touch to receive our full investor deck and financial model.</p>
+                <a class="buy-button bi-cta-btn" href="mailto:hello@modularlivingroomtable.com">Contact Us</a>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../javascript.js"></script>
+    <script>
+        (function () {
+            const warmBrown = '#5C4438';
+            const lightCream = 'rgba(255,253,245,0.9)';
+            const gridColor = 'rgba(255,253,245,0.15)';
+
+            // Financial Projections — area chart
+            const finCtx = document.getElementById('financialChart').getContext('2d');
+            const gradient = finCtx.createLinearGradient(0, 0, 0, 260);
+            gradient.addColorStop(0, 'rgba(122, 86, 70, 0.45)');
+            gradient.addColorStop(1, 'rgba(122, 86, 70, 0.03)');
+
+            new Chart(finCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5'],
+                    datasets: [{
+                        label: 'Revenue (USD millions)',
+                        data: [2.4, 8.7, 24.3, 61.8, 142.5],
+                        borderColor: '#7a5646',
+                        backgroundColor: gradient,
+                        borderWidth: 2.5,
+                        pointBackgroundColor: '#FFFDF5',
+                        pointBorderColor: '#7a5646',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        fill: true,
+                        tension: 0.42
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(44, 28, 20, 0.88)',
+                            titleColor: '#FFFDF5',
+                            bodyColor: '#F6EBDD',
+                            callbacks: {
+                                label: ctx => ' $' + ctx.parsed.y + 'M'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: lightCream, font: { family: 'Instrument Serif', size: 13 } },
+                            grid: { color: gridColor }
+                        },
+                        y: {
+                            ticks: {
+                                color: lightCream,
+                                font: { family: 'Instrument Serif', size: 12 },
+                                callback: val => '$' + val + 'M'
+                            },
+                            grid: { color: gridColor }
+                        }
+                    }
+                }
+            });
+
+            // Revenue Breakdown — doughnut chart
+            const revCtx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(revCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Direct-to-Consumer', 'B2B & Commercial', 'Custom Commissions'],
+                    datasets: [{
+                        data: [62, 23, 15],
+                        backgroundColor: ['#7a5646', '#b8907a', '#d4b09a'],
+                        borderColor: 'rgba(255,253,245,0.12)',
+                        borderWidth: 2,
+                        hoverOffset: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    cutout: '62%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(44, 28, 20, 0.88)',
+                            titleColor: '#FFFDF5',
+                            bodyColor: '#F6EBDD',
+                            callbacks: {
+                                label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + '%'
+                            }
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
