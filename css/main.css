@@ -1183,3 +1183,399 @@ p { font-size: 1.1rem; line-height: 1.6; margin-top: 0; }
     .about-pills,
     .detail-list { justify-content: center; }
 }
+
+/* ============================================================
+   Business Insights Page
+   ============================================================ */
+
+.bi-shell {
+    width: min(1180px, 92vw);
+    margin: 140px auto 80px;
+    display: grid;
+    gap: 24px;
+}
+
+/* Executive Summary */
+.bi-exec-summary {
+    border-radius: 32px;
+    padding: 42px 46px;
+    text-align: center;
+}
+
+.bi-exec-summary h1 {
+    margin: 0 0 16px;
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
+    line-height: 1.08;
+}
+
+.bi-exec-summary p {
+    max-width: 760px;
+    margin: 0 auto 22px;
+    line-height: 1.72;
+}
+
+.bi-exec-summary .about-pills {
+    justify-content: center;
+    margin-top: 0;
+}
+
+/* Two-column layout */
+.bi-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+/* Generic card */
+.bi-card {
+    border-radius: 28px;
+    padding: 30px 32px;
+}
+
+.bi-card-heading {
+    margin-bottom: 20px;
+}
+
+.bi-card-heading h2 {
+    margin: 0;
+    font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+}
+
+/* Business Model Canvas grid */
+.bmc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.3fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.bmc-cell {
+    background: rgba(255, 255, 255, 0.10);
+    padding: 12px 13px;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: #F0E9E1;
+}
+
+.bmc-cell:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.bmc-label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #FFFDF5;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.bmc-cell ul {
+    margin: 0;
+    padding-left: 14px;
+    color: #F0E0D4;
+    font-size: 0.8rem;
+}
+
+.bmc-cell ul li {
+    margin-bottom: 3px;
+}
+
+/* BMC grid placement */
+.bmc-partners    { grid-column: 1/2; grid-row: 1/3; }
+.bmc-activities  { grid-column: 2/3; grid-row: 1/2; }
+.bmc-resources   { grid-column: 2/3; grid-row: 2/3; }
+.bmc-value       { grid-column: 3/4; grid-row: 1/3; background: rgba(255,255,255,0.14); }
+.bmc-cr          { grid-column: 4/5; grid-row: 1/2; }
+.bmc-channels    { grid-column: 4/5; grid-row: 2/3; }
+.bmc-segments    { grid-column: 5/6; grid-row: 1/3; }
+.bmc-cost        { grid-column: 1/3; grid-row: 3/4; background: rgba(92,68,56,0.18); }
+.bmc-revenue-row { grid-column: 3/6; grid-row: 3/4; background: rgba(92,68,56,0.18); }
+
+/* Financial chart */
+.bi-chart-note {
+    font-size: 0.9rem;
+    color: #F0E0D4;
+    margin: -8px 0 16px;
+    line-height: 1.55;
+}
+
+.bi-chart-wrap {
+    position: relative;
+    height: 240px;
+    margin-bottom: 18px;
+}
+
+.bi-chart-wrap canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.bi-proj-milestones {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+}
+
+.bi-milestone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    padding: 10px 6px;
+}
+
+.bi-milestone-year {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #F0E0D4;
+}
+
+.bi-milestone-val {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #FFFDF5;
+}
+
+/* Revenue breakdown card */
+.bi-revenue-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.bi-revenue-inner {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex: 1;
+}
+
+.bi-donut-wrap {
+    flex: 0 0 180px;
+    height: 180px;
+}
+
+.bi-donut-wrap canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.bi-legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+}
+
+.bi-legend li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: #F0E9E1;
+}
+
+.bi-legend li strong {
+    margin-left: auto;
+    color: #FFFDF5;
+    font-size: 1.1rem;
+}
+
+.bi-legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Right column: KPIs */
+.bi-right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.bi-kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.bi-kpi-card {
+    border-radius: 22px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+}
+
+.bi-kpi-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #F0E0D4;
+}
+
+.bi-kpi-value {
+    font-size: clamp(1.55rem, 2.4vw, 2.1rem);
+    font-weight: 700;
+    color: #FFFDF5;
+    line-height: 1;
+}
+
+.bi-kpi-sub {
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: #F0E0D4;
+    letter-spacing: 0.04em;
+}
+
+/* CTA section */
+.bi-cta-section {
+    border-radius: 32px;
+    padding: 54px 46px;
+    text-align: center;
+}
+
+.bi-cta-inner {
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.bi-cta-inner h2 {
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    margin: 0 0 14px;
+}
+
+.bi-cta-inner p {
+    margin: 0 0 28px;
+    line-height: 1.7;
+}
+
+.bi-cta-btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 16px 44px;
+    font-size: 1.1rem;
+    border-radius: 999px;
+    background: rgba(240, 233, 225, 0.82);
+    color: #4A3328;
+    transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.bi-cta-btn:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+    .bi-two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .bi-bottom-row .bi-revenue-card {
+        order: 2;
+    }
+
+    .bi-bottom-row .bi-right-col {
+        order: 1;
+    }
+
+    .bmc-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto auto auto auto;
+    }
+
+    .bmc-partners    { grid-column: 1/2; grid-row: 1/3; }
+    .bmc-activities  { grid-column: 2/3; grid-row: 1/2; }
+    .bmc-resources   { grid-column: 2/3; grid-row: 2/3; }
+    .bmc-value       { grid-column: 3/4; grid-row: 1/3; }
+    .bmc-cr          { grid-column: 1/2; grid-row: 3/4; }
+    .bmc-channels    { grid-column: 2/3; grid-row: 3/4; }
+    .bmc-segments    { grid-column: 3/4; grid-row: 3/4; }
+    .bmc-cost        { grid-column: 1/3; grid-row: 4/5; }
+    .bmc-revenue-row { grid-column: 3/4; grid-row: 4/5; }
+}
+
+@media (max-width: 767px) {
+    .bi-shell {
+        width: min(94vw, 1180px);
+        margin-top: 118px;
+    }
+
+    .bi-exec-summary {
+        padding: 28px 22px;
+        border-radius: 22px;
+    }
+
+    .bi-card {
+        padding: 22px 20px;
+        border-radius: 22px;
+    }
+
+    .bi-cta-section {
+        padding: 36px 22px;
+        border-radius: 22px;
+    }
+
+    .bi-revenue-inner {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bi-donut-wrap {
+        flex: 0 0 160px;
+        height: 160px;
+    }
+
+    .bi-legend {
+        width: 100%;
+    }
+
+    .bi-kpi-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .bi-proj-milestones {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .bi-milestone {
+        min-width: calc(33% - 6px);
+    }
+
+    .bmc-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+    }
+
+    .bmc-partners,
+    .bmc-activities,
+    .bmc-resources,
+    .bmc-value,
+    .bmc-cr,
+    .bmc-channels,
+    .bmc-segments,
+    .bmc-cost,
+    .bmc-revenue-row {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
