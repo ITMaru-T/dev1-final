@@ -672,10 +672,15 @@ p {
     flex-direction: column;
     gap: 8px;
     width: 100%;
+    overflow: hidden;
 }
 
 .top-nav.is-open .nav-links {
     display: flex;
+}
+
+.top-nav.is-open {
+    border-radius: 24px;
 }
 
 .nav-link {
@@ -683,6 +688,9 @@ p {
     text-align: center;
     padding: 12px 10px;
     font-size: 1rem;
+    border-radius: 14px;
+    white-space: normal;
+    box-sizing: border-box;
 }
 
 @media (max-width: 767px) {
