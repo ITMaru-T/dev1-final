@@ -138,6 +138,19 @@
                 $cartQty.val(String(Math.min(Math.max(requestedQty, 1), maxQty || 1)));
             }
 
+            const updateCartTotals = () => {
+                if (!cartHasItem) {
+                    return;
+                }
+
+                const qty = Math.max(parseInt($cartQty.val(), 10) || 1, 1);
+                const subtotal = Math.round(unitPrice * qty);
+                const estimatedTax = Math.round(subtotal * taxRate);
+                const deliveryCost = 215 + (qty - 1) * 150;
+                const shippingHandling = 55 + (qty - 1) * 40;
+                const orderTotal = subtotal + estimatedTax + deliveryCost + shippingHandling;
+                const itemLabel = qty === 1 ? 'Item' : 'Items';
+
             var updateCartTotals = function () {
                 if (!cartHasItem) return;
                 var qty           = Math.max(parseInt($cartQty.val(), 10) || 1, 1);
@@ -147,12 +160,19 @@
                 var itemLabel     = qty === 1 ? 'Item' : 'Items';
                 $itemTotal.text(formatter.format(subtotal));
                 $subtotal.text(formatter.format(subtotal));
+                $delivery.text(formatter.format(deliveryCost));
+                $('#summary-shipping').text(formatter.format(shippingHandling));
                 $tax.text(formatter.format(estimatedTax));
                 $total.text(formatter.format(orderTotal));
                 $itemsCount.text(itemLabel + ' (' + qty + ')');
             };
 
-            $cartQty.on('change input', updateCartTotals);
+            $cartQty.on('change input', function () {
+                updateCartTotals();
+                try {
+                    window.localStorage.setItem('cartQty', String(Math.max(parseInt($cartQty.val(), 10) || 1, 1)));
+                } catch (e) {}
+            });
 
             $removeItem.on('click', function (e) {
                 e.preventDefault();
@@ -164,6 +184,12 @@
                 $subtotal.text(formatter.format(0));
                 $tax.text(formatter.format(0));
                 $total.text(formatter.format(0));
+
+                if ($delivery.length) {
+                    $delivery.text(formatter.format(0));
+                }
+                $('#summary-shipping').text(formatter.format(0));
+
                 if ($delivery.length) $delivery.text(formatter.format(0));
                 if ($checkoutButton.length) {
                     $checkoutButton.addClass('is-disabled').attr('aria-disabled', 'true').attr('tabindex', '-1');
@@ -177,5 +203,128 @@
             updateCartTotals();
         }
 
+        /* ── Checkout page ────────────────────────────── */
+        if ($('.checkout-page').length) {
+            const $steps        = $('.step');
+            const $sectionShip  = $('#section-shipping');
+            const $sectionPay   = $('#section-payment');
+            const $sectionRev   = $('#section-review');
+            const $toPaymentBtn = $('#to-payment-btn');
+            const $toReviewBtn  = $('#to-review-btn');
+            const $placeOrder   = $('#place-order-btn');
+            const $modal        = $('#order-modal');
+
+            // Apply saved cart quantity to checkout page
+            const checkoutUnitPrice = 899;
+            const checkoutTaxRate   = 72 / 899;
+            const checkoutFormatter = new Intl.NumberFormat('en-US', {
+                style: 'currency', currency: 'USD',
+                minimumFractionDigits: 0, maximumFractionDigits: 0
+            });
+            let checkoutExpressDelivery = false;
+
+            let checkoutQty = 1;
+            try {
+                const stored = parseInt(window.localStorage.getItem('cartQty'), 10);
+                if (Number.isFinite(stored) && stored >= 1) { checkoutQty = stored; }
+            } catch (e) {}
+
+            function updateCheckoutPrices() {
+                const subtotal         = Math.round(checkoutUnitPrice * checkoutQty);
+                const tax              = Math.round(subtotal * checkoutTaxRate);
+                const standardDelivery = 215 + (checkoutQty - 1) * 150;
+                const expressDelivery  = 259 + (checkoutQty - 1) * 150;
+                const delivery         = checkoutExpressDelivery ? expressDelivery : standardDelivery;
+                const shippingHandling = 55 + (checkoutQty - 1) * 40;
+                const total            = subtotal + tax + delivery + shippingHandling;
+                const deliveryText     = checkoutFormatter.format(delivery);
+
+                $('#standard-delivery-price').text(checkoutFormatter.format(standardDelivery));
+                $('#express-delivery-price').text(checkoutFormatter.format(expressDelivery));
+
+                $('#sidebar-item-qty').text('Qty: ' + checkoutQty);
+                $('#sidebar-item-price').text(checkoutFormatter.format(subtotal));
+                $('#sidebar-subtotal').text(checkoutFormatter.format(subtotal));
+                $('#sidebar-delivery').text(deliveryText);
+                $('#sidebar-shipping').text(checkoutFormatter.format(shippingHandling));
+                $('#sidebar-tax').text(checkoutFormatter.format(tax));
+                $('#sidebar-total').text(checkoutFormatter.format(total));
+
+                $('#review-item-qty').text('Solid oak veneer + powder-coated steel · Qty ' + checkoutQty);
+                $('#review-item-price').text(checkoutFormatter.format(subtotal));
+                $('#review-subtotal').text(checkoutFormatter.format(subtotal));
+                $('#review-delivery').text(deliveryText);
+                $('#review-shipping').text(checkoutFormatter.format(shippingHandling));
+                $('#review-tax').text(checkoutFormatter.format(tax));
+                $('#review-total').text(checkoutFormatter.format(total));
+            }
+
+            updateCheckoutPrices();
+
+            // Delivery toggle
+            $('.delivery-option').on('click', function () {
+                $('.delivery-option').removeClass('selected');
+                $(this).addClass('selected');
+                checkoutExpressDelivery = $(this).find('input').val() === 'express';
+                updateCheckoutPrices();
+            });
+
+            // Simple inline validation helper
+            function validateSection($section) {
+                let valid = true;
+                $section.find('input[required], select[required]').each(function () {
+                    if (!$(this).val().trim()) {
+                        $(this).addClass('invalid');
+                        valid = false;
+                    } else {
+                        $(this).removeClass('invalid');
+                    }
+                });
+                return valid;
+            }
+
+            $('input').on('input', function () {
+                if ($(this).val().trim()) {
+                    $(this).removeClass('invalid');
+                }
+            });
+
+            function advanceTo(stepIndex, $unlockSection) {
+                $steps.each(function (i) {
+                    $(this).toggleClass('active', i === stepIndex);
+                    $(this).toggleClass('completed', i < stepIndex);
+                });
+                $unlockSection.removeClass('locked-section');
+                $('html, body').animate({ scrollTop: $unlockSection.offset().top - 130 }, 400);
+            }
+
+            $toPaymentBtn.on('click', function () {
+                if (!validateSection($sectionShip)) return;
+                advanceTo(1, $sectionPay);
+            });
+
+            $toReviewBtn.on('click', function () {
+                if (!validateSection($sectionPay)) return;
+                advanceTo(2, $sectionRev);
+            });
+
+            $placeOrder.on('click', function () {
+                $modal.removeAttr('hidden');
+            });
+
+            // Card number formatting
+            $('#card-number').on('input', function () {
+                let val = $(this).val().replace(/\D/g, '').substring(0, 16);
+                val = val.replace(/(.{4})/g, '$1 ').trim();
+                $(this).val(val);
+            });
+
+            // Expiry formatting
+            $('#card-expiry').on('input', function () {
+                let val = $(this).val().replace(/\D/g, '').substring(0, 4);
+                if (val.length >= 3) val = val.substring(0, 2) + ' / ' + val.substring(2);
+                $(this).val(val);
+            });
+        }
     });
 })(jQuery);

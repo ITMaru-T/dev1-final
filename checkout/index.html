@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Checkout</title>
+	<link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="checkout-page">
+	<header class="site-header">
+		<nav class="top-nav">
+			<button class="nav-toggle" type="button">
+				<span class="nav-toggle-label">Menu</span>
+				<span class="nav-toggle-icon"><span></span><span></span><span></span></span>
+			</button>
+			<div class="nav-links" id="primary-navigation">
+				<a class="nav-link" href="../home/index.html">Home</a>
+				<a class="nav-link" href="../purchase/index.html">Purchase</a>
+				<a class="nav-link" href="../about/index.html">About</a>
+			</div>
+		</nav>
+	</header>
+
+	<main class="checkout-shell">
+
+		<!-- Progress Steps -->
+		<div class="checkout-steps glass-panel">
+			<div class="step active">
+				<span class="step-num">1</span>
+				<span class="step-label">Shipping</span>
+			</div>
+			<div class="step-divider"></div>
+			<div class="step">
+				<span class="step-num">2</span>
+				<span class="step-label">Payment</span>
+			</div>
+			<div class="step-divider"></div>
+			<div class="step">
+				<span class="step-num">3</span>
+				<span class="step-label">Review</span>
+			</div>
+		</div>
+
+		<div class="checkout-layout">
+
+			<!-- Left: Form -->
+			<div class="checkout-forms">
+
+				<!-- Shipping -->
+				<section class="checkout-card glass-panel" id="section-shipping">
+					<h2>Shipping Information</h2>
+					<form class="checkout-form" id="shipping-form" novalidate>
+						<div class="form-row two-col">
+							<div class="form-group">
+								<label for="first-name">First Name</label>
+								<input type="text" id="first-name" name="first-name" placeholder="Jane" autocomplete="given-name" required>
+							</div>
+							<div class="form-group">
+								<label for="last-name">Last Name</label>
+								<input type="text" id="last-name" name="last-name" placeholder="Smith" autocomplete="family-name" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="email">Email Address</label>
+							<input type="email" id="email" name="email" placeholder="jane@example.com" autocomplete="email" required>
+						</div>
+						<div class="form-group">
+							<label for="phone">Phone Number</label>
+							<input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" autocomplete="tel">
+						</div>
+						<div class="form-group">
+							<label for="address">Street Address</label>
+							<input type="text" id="address" name="address" placeholder="123 Main St" autocomplete="street-address" required>
+						</div>
+						<div class="form-group">
+							<label for="address2">Apartment, suite, etc. <span class="optional">(optional)</span></label>
+							<input type="text" id="address2" name="address2" placeholder="Apt 4B" autocomplete="address-line2">
+						</div>
+						<div class="form-row three-col">
+							<div class="form-group">
+								<label for="city">City</label>
+								<input type="text" id="city" name="city" placeholder="New York" autocomplete="address-level2" required>
+							</div>
+							<div class="form-group">
+								<label for="state">State</label>
+								<select id="state" name="state" autocomplete="address-level1" required>
+									<option value="" disabled selected>Select</option>
+									<option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
+									<option>CA</option><option>CO</option><option>CT</option><option>DE</option>
+									<option>FL</option><option>GA</option><option>HI</option><option>ID</option>
+									<option>IL</option><option>IN</option><option>IA</option><option>KS</option>
+									<option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+									<option>MA</option><option>MI</option><option>MN</option><option>MS</option>
+									<option>MO</option><option>MT</option><option>NE</option><option>NV</option>
+									<option>NH</option><option>NJ</option><option>NM</option><option>NY</option>
+									<option>NC</option><option>ND</option><option>OH</option><option>OK</option>
+									<option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+									<option>SD</option><option>TN</option><option>TX</option><option>UT</option>
+									<option>VT</option><option>VA</option><option>WA</option><option>WV</option>
+									<option>WI</option><option>WY</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="zip">ZIP Code</label>
+								<input type="text" id="zip" name="zip" placeholder="10001" autocomplete="postal-code" required maxlength="10">
+							</div>
+						</div>
+
+						<h3 class="subsection-title">Delivery Method</h3>
+						<div class="delivery-options">
+							<label class="delivery-option selected" id="delivery-standard-label">
+								<input type="radio" name="delivery" value="standard" checked>
+								<span class="delivery-info">
+									<span class="delivery-name">Standard Delivery</span>
+									<span class="delivery-eta">2–4 business days</span>
+								</span>
+							<span class="delivery-price" id="standard-delivery-price">$215</span>
+						</label>
+						<label class="delivery-option" id="delivery-express-label">
+							<input type="radio" name="delivery" value="express">
+							<span class="delivery-info">
+								<span class="delivery-name">Express Delivery</span>
+								<span class="delivery-eta">1–2 business days</span>
+							</span>
+							<span class="delivery-price" id="express-delivery-price">$259</span>
+							</label>
+						</div>
+
+						<button type="button" class="checkout-next-btn" id="to-payment-btn">Continue to Payment</button>
+					</form>
+				</section>
+
+				<!-- Payment -->
+				<section class="checkout-card glass-panel locked-section" id="section-payment">
+					<h2>Payment Details</h2>
+					<form class="checkout-form" id="payment-form" novalidate>
+						<div class="form-group">
+							<label for="card-name">Name on Card</label>
+							<input type="text" id="card-name" name="card-name" placeholder="Jane Smith" autocomplete="cc-name" required>
+						</div>
+						<div class="form-group card-number-group">
+							<label for="card-number">Card Number</label>
+							<input type="text" id="card-number" name="card-number" placeholder="•••• •••• •••• ••••" autocomplete="cc-number" maxlength="19" required>
+							<span class="card-icon">💳</span>
+						</div>
+						<div class="form-row two-col">
+							<div class="form-group">
+								<label for="card-expiry">Expiry Date</label>
+								<input type="text" id="card-expiry" name="card-expiry" placeholder="MM / YY" autocomplete="cc-exp" maxlength="7" required>
+							</div>
+							<div class="form-group">
+								<label for="card-cvv">CVV</label>
+								<input type="text" id="card-cvv" name="card-cvv" placeholder="•••" autocomplete="cc-csc" maxlength="4" required>
+							</div>
+						</div>
+						<p class="secure-note">🔒 Your payment information is encrypted and secure.</p>
+						<button type="button" class="checkout-next-btn" id="to-review-btn">Review Order</button>
+					</form>
+				</section>
+
+				<!-- Review -->
+				<section class="checkout-card glass-panel locked-section" id="section-review">
+					<h2>Review Your Order</h2>
+					<div class="review-item-card">
+						<img src="../img/rendering1.jpeg" alt="Modular Living Room Table">
+						<div>
+							<p class="item-category">Living Room / Tables</p>
+							<h3>Modular Living Room Table</h3>
+							<p class="item-meta" id="review-item-qty">Solid oak veneer + powder-coated steel · Qty 1</p>
+						</div>
+						<p class="item-price" id="review-item-price">$899</p>
+					</div>
+
+					<div class="review-summary-lines">
+						<div class="summary-line">
+							<span>Subtotal</span>
+							<strong id="review-subtotal">$899</strong>
+						</div>
+						<div class="summary-line">
+							<span>Delivery</span>
+							<strong id="review-delivery">$215</strong>
+						</div>
+						<div class="summary-line">
+							<span>Shipping &amp; Handling</span>
+							<strong id="review-shipping">$55</strong>
+						</div>
+						<div class="summary-line">
+							<span>Estimated Tax</span>
+							<strong id="review-tax">$72</strong>
+						</div>
+						<div class="summary-line total-line">
+							<span>Total</span>
+							<strong id="review-total">$1,241</strong>
+						</div>
+					</div>
+
+					<button type="button" class="checkout-next-btn place-order-btn" id="place-order-btn">Place Order</button>
+				</section>
+
+			</div>
+
+			<!-- Right: Order Summary Sidebar -->
+			<aside class="checkout-sidebar">
+				<div class="checkout-card glass-panel">
+					<h2>Order Summary</h2>
+					<div class="sidebar-item">
+						<img src="../img/rendering1.jpeg" alt="Modular Living Room Table">
+						<div>
+							<p class="sidebar-item-name">Modular Living Room Table</p>
+							<p class="sidebar-item-meta" id="sidebar-item-qty">Qty: 1</p>
+						</div>
+						<p class="sidebar-item-price" id="sidebar-item-price">$899</p>
+					</div>
+					<div class="summary-line">
+						<span>Subtotal</span>
+						<strong id="sidebar-subtotal">$899</strong>
+					</div>
+					<div class="summary-line">
+						<span>Delivery</span>
+						<strong id="sidebar-delivery">$215</strong>
+					</div>
+					<div class="summary-line">
+						<span>Shipping &amp; Handling</span>
+						<strong id="sidebar-shipping">$55</strong>
+					</div>
+					<div class="summary-line">
+						<span>Estimated Tax</span>
+						<strong id="sidebar-tax">$72</strong>
+					</div>
+					<div class="summary-line total-line">
+						<span>Total</span>
+						<strong id="sidebar-total">$1,241</strong>
+					</div>
+					<ul class="summary-points">
+						<li>Secure encrypted checkout</li>
+						<li>30-day risk-free returns</li>
+						<li>2-year craftsmanship warranty</li>
+					</ul>
+				</div>
+				<a class="continue-shopping" href="../cart/index.html">← Back to Cart</a>
+			</aside>
+		</div>
+
+	</main>
+
+	<!-- Order Confirmation Modal -->
+	<div class="order-modal-overlay" id="order-modal" hidden>
+		<div class="order-modal glass-panel">
+			<div class="order-modal-icon">✓</div>
+			<h2>Order Confirmed!</h2>
+			<p>Thank you for your purchase. Your Modular Living Room Table is on its way. You'll receive a confirmation email shortly.</p>
+			<p class="order-number">Order #<strong>MLT-2026-00421</strong></p>
+			<a class="checkout-next-btn" href="../home/index.html">Back to Home</a>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="../javascript.js"></script>
+</body>
+</html>
