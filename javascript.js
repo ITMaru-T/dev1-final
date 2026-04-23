@@ -100,7 +100,10 @@
         if ($productQty.length && $addToCart.length) {
             $addToCart.on('click', function () {
                 var qty = Math.max(parseInt($productQty.val(), 10) || 1, 1);
-                try { window.localStorage.setItem('cartQty', String(qty)); } catch (e) {}
+                try {
+                    window.localStorage.setItem('cartQty', String(qty));
+                    window.localStorage.setItem('cartHasItem', 'true');
+                } catch (e) {}
             });
         }
 
@@ -117,7 +120,13 @@
             var $emptyState     = $('#empty-cart-state');
             var $removeItem     = $('#cart-remove-item');
             var $checkoutButton = $('.checkout-button');
-            var cartHasItem     = true;
+            var cartHasItem     = false;
+
+            try {
+                cartHasItem = window.localStorage.getItem('cartHasItem') === 'true';
+            } catch (e) {
+                cartHasItem = false;
+            }
 
             var parseCurrency = function (v) { return Number(String(v).replace(/[^0-9.-]/g, '')) || 0; };
             var formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -131,7 +140,9 @@
             var qtyFromStorage;
             try { qtyFromStorage = parseInt(window.localStorage.getItem('cartQty'), 10); } catch (e) { qtyFromStorage = NaN; }
 
-            var requestedQty = Number.isFinite(qtyFromQuery) ? qtyFromQuery : (Number.isFinite(qtyFromStorage) ? qtyFromStorage : NaN);
+            var requestedQty = cartHasItem
+                ? (Number.isFinite(qtyFromQuery) ? qtyFromQuery : (Number.isFinite(qtyFromStorage) ? qtyFromStorage : NaN))
+                : NaN;
 
             if (Number.isFinite(requestedQty)) {
                 var maxQty = Math.max.apply(null, $cartQty.find('option').map(function () { return parseInt($(this).val(), 10) || 1; }).get());
@@ -139,7 +150,17 @@
             }
 
             var updateCartTotals = function () {
-                if (!cartHasItem) return;
+                if (!cartHasItem) {
+                    $itemTotal.text(formatter.format(0));
+                    $subtotal.text(formatter.format(0));
+                    $tax.text(formatter.format(0));
+                    $total.text(formatter.format(0));
+                    if ($delivery.length) {
+                        $delivery.text(formatter.format(0));
+                    }
+                    $('#summary-shipping').text(formatter.format(0));
+                    return;
+                }
                 var qty           = Math.max(parseInt($cartQty.val(), 10) || 1, 1);
                 var subtotal      = Math.round(unitPrice * qty);
                 var estimatedTax  = Math.round(subtotal * taxRate);
@@ -156,6 +177,19 @@
                 $itemsCount.text(itemLabel + ' (' + qty + ')');
             };
 
+            var syncCartVisibility = function () {
+                if (cartHasItem) {
+                    $itemCard.removeAttr('hidden').show();
+                    $emptyState.attr('hidden', true);
+                    $checkoutButton.removeClass('is-disabled').removeAttr('aria-disabled').removeAttr('tabindex');
+                } else {
+                    $itemCard.attr('hidden', true).hide();
+                    $emptyState.removeAttr('hidden');
+                    $itemsCount.text('Items (0)');
+                    $checkoutButton.addClass('is-disabled').attr('aria-disabled', 'true').attr('tabindex', '-1');
+                }
+            };
+
             $cartQty.on('change input', function () {
                 updateCartTotals();
                 try {
@@ -166,51 +200,30 @@
             $removeItem.on('click', function (e) {
                 e.preventDefault();
                 cartHasItem = false;
-                $itemCard.attr('hidden', true).hide();
-                $emptyState.removeAttr('hidden');
-                $itemsCount.text('Items (0)');
-                $itemTotal.text(formatter.format(0));
-                $subtotal.text(formatter.format(0));
-                $tax.text(formatter.format(0));
-                $total.text(formatter.format(0));
-
-                if ($delivery.length) {
-                    $delivery.text(formatter.format(0));
-                }
-                $('#summary-shipping').text(formatter.format(0));
-
-                if ($delivery.length) $delivery.text(formatter.format(0));
-                if ($checkoutButton.length) {
-                    $checkoutButton.addClass('is-disabled').attr('aria-disabled', 'true').attr('tabindex', '-1');
-                }
+                try {
+                    window.localStorage.setItem('cartHasItem', 'false');
+                    window.localStorage.removeItem('cartQty');
+                } catch (e) {}
+                syncCartVisibility();
+                updateCartTotals();
             });
 
             $checkoutButton.on('click', function (e) {
                 if ($(this).hasClass('is-disabled')) e.preventDefault();
             });
 
+            syncCartVisibility();
             updateCartTotals();
         }
 
-        /* ── Checkout page ────────────────────────────── */
+        /* ── Checkout pages (shared helpers) ────────────────────────────── */
         if ($('.checkout-page').length) {
-            const $steps        = $('.step');
-            const $sectionShip  = $('#section-shipping');
-            const $sectionPay   = $('#section-payment');
-            const $sectionRev   = $('#section-review');
-            const $toPaymentBtn = $('#to-payment-btn');
-            const $toReviewBtn  = $('#to-review-btn');
-            const $placeOrder   = $('#place-order-btn');
-            const $modal        = $('#order-modal');
-
-            // Apply saved cart quantity to checkout page
             const checkoutUnitPrice = 899;
             const checkoutTaxRate   = 72 / 899;
             const checkoutFormatter = new Intl.NumberFormat('en-US', {
                 style: 'currency', currency: 'USD',
                 minimumFractionDigits: 0, maximumFractionDigits: 0
             });
-            let checkoutExpressDelivery = false;
 
             let checkoutQty = 1;
             try {
@@ -218,7 +231,12 @@
                 if (Number.isFinite(stored) && stored >= 1) { checkoutQty = stored; }
             } catch (e) {}
 
-            function updateCheckoutPrices() {
+            let checkoutExpressDelivery = false;
+            try {
+                checkoutExpressDelivery = window.localStorage.getItem('checkoutDelivery') === 'express';
+            } catch (e) {}
+
+            function calcPrices() {
                 const subtotal         = Math.round(checkoutUnitPrice * checkoutQty);
                 const tax              = Math.round(subtotal * checkoutTaxRate);
                 const standardDelivery = 215 + (checkoutQty - 1) * 150;
@@ -226,39 +244,19 @@
                 const delivery         = checkoutExpressDelivery ? expressDelivery : standardDelivery;
                 const shippingHandling = 55 + (checkoutQty - 1) * 40;
                 const total            = subtotal + tax + delivery + shippingHandling;
-                const deliveryText     = checkoutFormatter.format(delivery);
-
-                $('#standard-delivery-price').text(checkoutFormatter.format(standardDelivery));
-                $('#express-delivery-price').text(checkoutFormatter.format(expressDelivery));
-
-                $('#sidebar-item-qty').text('Qty: ' + checkoutQty);
-                $('#sidebar-item-price').text(checkoutFormatter.format(subtotal));
-                $('#sidebar-subtotal').text(checkoutFormatter.format(subtotal));
-                $('#sidebar-delivery').text(deliveryText);
-                $('#sidebar-shipping').text(checkoutFormatter.format(shippingHandling));
-                $('#sidebar-tax').text(checkoutFormatter.format(tax));
-                $('#sidebar-total').text(checkoutFormatter.format(total));
-
-                $('#review-item-qty').text('Solid oak veneer + powder-coated steel · Qty ' + checkoutQty);
-                $('#review-item-price').text(checkoutFormatter.format(subtotal));
-                $('#review-subtotal').text(checkoutFormatter.format(subtotal));
-                $('#review-delivery').text(deliveryText);
-                $('#review-shipping').text(checkoutFormatter.format(shippingHandling));
-                $('#review-tax').text(checkoutFormatter.format(tax));
-                $('#review-total').text(checkoutFormatter.format(total));
+                return { subtotal, tax, standardDelivery, expressDelivery, delivery, shippingHandling, total };
             }
 
-            updateCheckoutPrices();
+            function updateSidebar(p) {
+                $('#sidebar-item-qty').text('Qty: ' + checkoutQty);
+                $('#sidebar-item-price').text(checkoutFormatter.format(p.subtotal));
+                $('#sidebar-subtotal').text(checkoutFormatter.format(p.subtotal));
+                $('#sidebar-delivery').text(checkoutFormatter.format(p.delivery));
+                $('#sidebar-shipping').text(checkoutFormatter.format(p.shippingHandling));
+                $('#sidebar-tax').text(checkoutFormatter.format(p.tax));
+                $('#sidebar-total').text(checkoutFormatter.format(p.total));
+            }
 
-            // Delivery toggle
-            $('.delivery-option').on('click', function () {
-                $('.delivery-option').removeClass('selected');
-                $(this).addClass('selected');
-                checkoutExpressDelivery = $(this).find('input').val() === 'express';
-                updateCheckoutPrices();
-            });
-
-            // Simple inline validation helper
             function validateSection($section) {
                 let valid = true;
                 $section.find('input[required], select[required]').each(function () {
@@ -273,47 +271,215 @@
             }
 
             $('input').on('input', function () {
-                if ($(this).val().trim()) {
-                    $(this).removeClass('invalid');
-                }
+                if ($(this).val().trim()) { $(this).removeClass('invalid'); }
             });
 
-            function advanceTo(stepIndex, $unlockSection) {
-                $steps.each(function (i) {
-                    $(this).toggleClass('active', i === stepIndex);
-                    $(this).toggleClass('completed', i < stepIndex);
+            // Generic helpers for saving/restoring form fields
+            function saveFormToStorage(formId, storageKey) {
+                const data = {};
+                $('#' + formId).find('input, select, textarea').each(function () {
+                    const $field = $(this);
+                    const key = $field.attr('name') || $field.attr('id');
+                    if (!key) return;
+
+                    if ($field.is(':radio')) {
+                        if ($field.is(':checked')) {
+                            data[key] = $field.val();
+                        }
+                        return;
+                    }
+
+                    if ($field.is(':checkbox')) {
+                        data[key] = $field.is(':checked');
+                        return;
+                    }
+
+                    data[key] = $field.val();
                 });
-                $unlockSection.removeClass('locked-section');
-                $('html, body').animate({ scrollTop: $unlockSection.offset().top - 130 }, 400);
+                try { window.localStorage.setItem(storageKey, JSON.stringify(data)); } catch (e) {}
             }
 
-            $toPaymentBtn.on('click', function () {
-                if (!validateSection($sectionShip)) return;
-                advanceTo(1, $sectionPay);
-            });
+            function restoreFormFromStorage(formId, storageKey) {
+                try {
+                    const raw = window.localStorage.getItem(storageKey);
+                    if (!raw) return;
+                    const data = JSON.parse(raw);
+                    $('#' + formId).find('input, select, textarea').each(function () {
+                        const $field = $(this);
+                        const key = $field.attr('name') || $field.attr('id');
+                        if (!key || data[key] === undefined) return;
 
-            $toReviewBtn.on('click', function () {
-                if (!validateSection($sectionPay)) return;
-                advanceTo(2, $sectionRev);
-            });
+                        if ($field.is(':radio')) {
+                            $field.prop('checked', $field.val() === data[key]);
+                            return;
+                        }
 
-            $placeOrder.on('click', function () {
-                $modal.removeAttr('hidden');
-            });
+                        if ($field.is(':checkbox')) {
+                            $field.prop('checked', !!data[key]);
+                            return;
+                        }
 
-            // Card number formatting
-            $('#card-number').on('input', function () {
-                let val = $(this).val().replace(/\D/g, '').substring(0, 16);
-                val = val.replace(/(.{4})/g, '$1 ').trim();
-                $(this).val(val);
-            });
+                        $field.val(data[key]);
+                    });
+                } catch (e) {}
+            }
 
-            // Expiry formatting
-            $('#card-expiry').on('input', function () {
-                let val = $(this).val().replace(/\D/g, '').substring(0, 4);
-                if (val.length >= 3) val = val.substring(0, 2) + ' / ' + val.substring(2);
-                $(this).val(val);
-            });
+            /* ── Step 1: Shipping ── */
+            if ($('.checkout-shipping').length) {
+                // Restore saved shipping fields
+                restoreFormFromStorage('shipping-form', 'checkoutShipping');
+
+                // Use radio state if restored from storage
+                const restoredDelivery = $('input[name="delivery"]:checked').val();
+                if (restoredDelivery) {
+                    checkoutExpressDelivery = restoredDelivery === 'express';
+                }
+
+                function renderShippingPrices() {
+                    const p = calcPrices();
+                    $('#standard-delivery-price').text(checkoutFormatter.format(p.standardDelivery));
+                    $('#express-delivery-price').text(checkoutFormatter.format(p.expressDelivery));
+                    updateSidebar(p);
+                }
+
+                function applyDeliveryChoice(isExpress) {
+                    checkoutExpressDelivery = isExpress;
+                    $('.delivery-option').removeClass('selected');
+                    const $selectedLabel = isExpress ? $('#delivery-express-label') : $('#delivery-standard-label');
+                    $selectedLabel.addClass('selected');
+                    $selectedLabel.find('input').prop('checked', true);
+                    try { window.localStorage.setItem('checkoutDelivery', isExpress ? 'express' : 'standard'); } catch (e) {}
+                    saveFormToStorage('shipping-form', 'checkoutShipping');
+                    renderShippingPrices();
+                }
+
+                applyDeliveryChoice(checkoutExpressDelivery);
+
+                // Auto-save shipping fields as user types
+                $('#shipping-form').on('input change', function () {
+                    saveFormToStorage('shipping-form', 'checkoutShipping');
+                });
+
+                $('.delivery-option').on('click', function () {
+                    applyDeliveryChoice($(this).find('input').val() === 'express');
+                });
+
+                $('input[name="delivery"]').on('change', function () {
+                    applyDeliveryChoice($(this).val() === 'express');
+                });
+
+                $('#to-payment-btn').on('click', function () {
+                    if (!validateSection($('#section-shipping'))) return;
+                    saveFormToStorage('shipping-form', 'checkoutShipping');
+                    window.location.href = 'payment.html';
+                });
+            }
+
+            /* ── Step 2: Payment ── */
+            if ($('.checkout-payment').length) {
+                updateSidebar(calcPrices());
+
+                // Restore saved payment fields
+                restoreFormFromStorage('payment-form', 'checkoutPayment');
+
+                // Card number formatting
+                $('#card-number').on('input', function () {
+                    let val = $(this).val().replace(/\D/g, '').substring(0, 16);
+                    val = val.replace(/(.{4})/g, '$1 ').trim();
+                    $(this).val(val);
+                });
+
+                // Expiry formatting
+                $('#card-expiry').on('input', function () {
+                    const raw = $(this).val().replace(/\D/g, '').substring(0, 4);
+                    if (!raw.length) {
+                        $(this).val('');
+                        return;
+                    }
+
+                    let month;
+                    if (raw.length === 1) {
+                        month = raw[0] === '0' || raw[0] === '1' ? raw[0] : ('0' + raw[0]);
+                    } else {
+                        let monthNum = parseInt(raw.substring(0, 2), 10);
+                        if (!Number.isFinite(monthNum) || monthNum < 1) monthNum = 1;
+                        if (monthNum > 12) monthNum = 12;
+                        month = String(monthNum).padStart(2, '0');
+                    }
+
+                    const year = raw.length > 2 ? raw.substring(2) : '';
+                    $(this).val(year ? (month + ' / ' + year) : month);
+                });
+
+                // Auto-save payment fields as user types
+                $('#payment-form').on('input change', function () {
+                    saveFormToStorage('payment-form', 'checkoutPayment');
+                });
+
+                $('#to-review-btn').on('click', function () {
+                    if (!validateSection($('#section-payment'))) return;
+                    saveFormToStorage('payment-form', 'checkoutPayment');
+                    window.location.href = 'review.html';
+                });
+            }
+
+            /* ── Step 3: Review ── */
+            if ($('.checkout-review').length) {
+                const p = calcPrices();
+                updateSidebar(p);
+
+                function showOrderConfetti() {
+                    const $modalOverlay = $('#order-modal');
+                    if (!$modalOverlay.length) return;
+
+                    $modalOverlay.find('.order-confetti').remove();
+
+                    const $confettiLayer = $('<div class="order-confetti" aria-hidden="true"></div>');
+                    const colors = ['#f4b400', '#34a853', '#4285f4', '#ea4335', '#7a9a6a', '#5c4438'];
+                    const totalPieces = 110;
+
+                    for (let i = 0; i < totalPieces; i += 1) {
+                        const piece = document.createElement('span');
+                        const size = 6 + Math.random() * 8;
+                        const isRound = Math.random() < 0.35;
+                        const angle = Math.random() * Math.PI * 2;
+                        const distance = 120 + Math.random() * 520;
+                        const burstX = Math.cos(angle) * distance;
+                        const burstY = Math.sin(angle) * distance;
+
+                        piece.className = 'order-confetti-piece';
+                        piece.style.setProperty('--burst-x', burstX.toFixed(1) + 'px');
+                        piece.style.setProperty('--burst-y', burstY.toFixed(1) + 'px');
+                        piece.style.setProperty('--burst-delay', (Math.random() * 0.18).toFixed(2) + 's');
+                        piece.style.setProperty('--burst-duration', (1.3 + Math.random() * 1.1).toFixed(2) + 's');
+                        piece.style.setProperty('--spin', (180 + Math.random() * 900).toFixed(0) + 'deg');
+                        piece.style.setProperty('--confetti-color', colors[Math.floor(Math.random() * colors.length)]);
+                        piece.style.width = size.toFixed(1) + 'px';
+                        piece.style.height = (isRound ? size : size * 1.45).toFixed(1) + 'px';
+                        piece.style.borderRadius = isRound ? '999px' : '2px';
+
+                        $confettiLayer.append(piece);
+                    }
+
+                    $modalOverlay.append($confettiLayer);
+                    window.setTimeout(function () {
+                        $confettiLayer.remove();
+                    }, 2800);
+                }
+
+                $('#review-item-qty').text('Solid oak veneer + powder-coated steel · Qty ' + checkoutQty);
+                $('#review-item-price').text(checkoutFormatter.format(p.subtotal));
+                $('#review-subtotal').text(checkoutFormatter.format(p.subtotal));
+                $('#review-delivery').text(checkoutFormatter.format(p.delivery));
+                $('#review-shipping').text(checkoutFormatter.format(p.shippingHandling));
+                $('#review-tax').text(checkoutFormatter.format(p.tax));
+                $('#review-total').text(checkoutFormatter.format(p.total));
+
+                $('#place-order-btn').on('click', function () {
+                    $('#order-modal').removeAttr('hidden');
+                    showOrderConfetti();
+                });
+            }
         }
     });
 })(jQuery);

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Checkout – Payment</title>
+	<link rel="stylesheet" href="../css/main.css">
+</head>
+<body class="checkout-page checkout-payment">
+	<header class="site-header">
+		<nav class="top-nav">
+			<button class="nav-toggle" type="button">
+				<span class="nav-toggle-label">Menu</span>
+				<span class="nav-toggle-icon"><span></span><span></span><span></span></span>
+			</button>
+			<div class="nav-links" id="primary-navigation">
+				<a class="nav-link" href="../home/index.html">Home</a>
+				<a class="nav-link" href="../purchase/index.html">Purchase</a>
+				<a class="nav-link" href="../about/index.html">About</a>
+				<a class="nav-link" href="../business-insights/index.html">Business Insights</a>
+			</div>
+			<a class="nav-cart-link" href="../cart/index.html" aria-label="Go to cart" title="Cart">
+				<svg class="nav-cart-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+					<path d="M3 5h2l2.1 9h8.7l2.2-6.5H7.4"></path>
+					<circle cx="10" cy="18" r="1.6"></circle>
+					<circle cx="16" cy="18" r="1.6"></circle>
+				</svg>
+			</a>
+		</nav>
+	</header>
+
+	<main class="checkout-shell">
+
+		<!-- Progress Steps -->
+		<div class="checkout-steps glass-panel">
+			<div class="step completed">
+				<span class="step-num">1</span>
+				<span class="step-label">Shipping</span>
+			</div>
+			<div class="step-divider"></div>
+			<div class="step active">
+				<span class="step-num">2</span>
+				<span class="step-label">Payment</span>
+			</div>
+			<div class="step-divider"></div>
+			<div class="step">
+				<span class="step-num">3</span>
+				<span class="step-label">Review</span>
+			</div>
+		</div>
+
+		<div class="checkout-layout">
+
+			<!-- Left: Form -->
+			<div class="checkout-forms">
+
+				<section class="checkout-card glass-panel" id="section-payment">
+					<h2>Payment Details</h2>
+					<form class="checkout-form" id="payment-form" novalidate>
+						<div class="form-group">
+							<label for="card-name">Name on Card</label>
+							<input type="text" id="card-name" name="card-name" placeholder="Jane Smith" autocomplete="cc-name" required>
+						</div>
+						<div class="form-group card-number-group">
+							<label for="card-number">Card Number</label>
+							<input type="text" id="card-number" name="card-number" placeholder="•••• •••• •••• ••••" autocomplete="cc-number" maxlength="19" required>
+							<span class="card-icon">💳</span>
+						</div>
+						<div class="form-row two-col">
+							<div class="form-group">
+								<label for="card-expiry">Expiry Date</label>
+								<input type="text" id="card-expiry" name="card-expiry" placeholder="MM / YY" autocomplete="cc-exp" maxlength="7" required>
+							</div>
+							<div class="form-group">
+								<label for="card-cvv">CVV</label>
+								<input type="text" id="card-cvv" name="card-cvv" placeholder="•••" autocomplete="cc-csc" maxlength="4" required>
+							</div>
+						</div>
+						<p class="secure-note">🔒 Your payment information is encrypted and secure.</p>
+						<button type="button" class="checkout-next-btn" id="to-review-btn">Review Order</button>
+					</form>
+				</section>
+
+			</div>
+
+			<!-- Right: Order Summary Sidebar -->
+			<aside class="checkout-sidebar">
+				<div class="checkout-card glass-panel">
+					<h2>Order Summary</h2>
+					<div class="sidebar-item">
+						<img src="../img/rendering1.jpeg" alt="Modular Living Room Table">
+						<div>
+							<p class="sidebar-item-name">Modular Living Room Table</p>
+							<p class="sidebar-item-meta" id="sidebar-item-qty">Qty: 1</p>
+						</div>
+						<p class="sidebar-item-price" id="sidebar-item-price">$899</p>
+					</div>
+					<div class="summary-line">
+						<span>Subtotal</span>
+						<strong id="sidebar-subtotal">$899</strong>
+					</div>
+					<div class="summary-line">
+						<span>Delivery</span>
+						<strong id="sidebar-delivery">$215</strong>
+					</div>
+					<div class="summary-line">
+						<span>Shipping &amp; Handling</span>
+						<strong id="sidebar-shipping">$55</strong>
+					</div>
+					<div class="summary-line">
+						<span>Estimated Tax</span>
+						<strong id="sidebar-tax">$72</strong>
+					</div>
+					<div class="summary-line total-line">
+						<span>Total</span>
+						<strong id="sidebar-total">$1,241</strong>
+					</div>
+					<ul class="summary-points">
+						<li>Secure encrypted checkout</li>
+						<li>30-day risk-free returns</li>
+						<li>2-year craftsmanship warranty</li>
+					</ul>
+				</div>
+				<div class="checkout-card glass-panel checkout-back-card">
+					<a class="continue-shopping checkout-back-link" href="index.html">← Back to Shipping</a>
+				</div>
+			</aside>
+		</div>
+
+	</main>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="../javascript.js"></script>
+</body>
+</html>

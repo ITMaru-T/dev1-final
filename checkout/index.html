@@ -3,10 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Checkout</title>
+	<title>Checkout – Shipping</title>
 	<link rel="stylesheet" href="../css/main.css">
 </head>
-<body class="checkout-page">
+<body class="checkout-page checkout-shipping">
 	<header class="site-header">
 		<nav class="top-nav">
 			<button class="nav-toggle" type="button">
@@ -19,6 +19,13 @@
 				<a class="nav-link" href="../about/index.html">About</a>
 				<a class="nav-link" href="../business-insights/index.html">Business Insights</a>
 			</div>
+			<a class="nav-cart-link" href="../cart/index.html" aria-label="Go to cart" title="Cart">
+				<svg class="nav-cart-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+					<path d="M3 5h2l2.1 9h8.7l2.2-6.5H7.4"></path>
+					<circle cx="10" cy="18" r="1.6"></circle>
+					<circle cx="16" cy="18" r="1.6"></circle>
+				</svg>
+			</a>
 		</nav>
 	</header>
 
@@ -47,7 +54,6 @@
 			<!-- Left: Form -->
 			<div class="checkout-forms">
 
-				<!-- Shipping -->
 				<section class="checkout-card glass-panel" id="section-shipping">
 					<h2>Shipping Information</h2>
 					<form class="checkout-form" id="shipping-form" novalidate>
@@ -115,87 +121,20 @@
 									<span class="delivery-name">Standard Delivery</span>
 									<span class="delivery-eta">2–4 business days</span>
 								</span>
-							<span class="delivery-price" id="standard-delivery-price">$215</span>
-						</label>
-						<label class="delivery-option" id="delivery-express-label">
-							<input type="radio" name="delivery" value="express">
-							<span class="delivery-info">
-								<span class="delivery-name">Express Delivery</span>
-								<span class="delivery-eta">1–2 business days</span>
-							</span>
-							<span class="delivery-price" id="express-delivery-price">$259</span>
+								<span class="delivery-price" id="standard-delivery-price">$215</span>
+							</label>
+							<label class="delivery-option" id="delivery-express-label">
+								<input type="radio" name="delivery" value="express">
+								<span class="delivery-info">
+									<span class="delivery-name">Express Delivery</span>
+									<span class="delivery-eta">1–2 business days</span>
+								</span>
+								<span class="delivery-price" id="express-delivery-price">$259</span>
 							</label>
 						</div>
 
 						<button type="button" class="checkout-next-btn" id="to-payment-btn">Continue to Payment</button>
 					</form>
-				</section>
-
-				<!-- Payment -->
-				<section class="checkout-card glass-panel locked-section" id="section-payment">
-					<h2>Payment Details</h2>
-					<form class="checkout-form" id="payment-form" novalidate>
-						<div class="form-group">
-							<label for="card-name">Name on Card</label>
-							<input type="text" id="card-name" name="card-name" placeholder="Jane Smith" autocomplete="cc-name" required>
-						</div>
-						<div class="form-group card-number-group">
-							<label for="card-number">Card Number</label>
-							<input type="text" id="card-number" name="card-number" placeholder="•••• •••• •••• ••••" autocomplete="cc-number" maxlength="19" required>
-							<span class="card-icon">💳</span>
-						</div>
-						<div class="form-row two-col">
-							<div class="form-group">
-								<label for="card-expiry">Expiry Date</label>
-								<input type="text" id="card-expiry" name="card-expiry" placeholder="MM / YY" autocomplete="cc-exp" maxlength="7" required>
-							</div>
-							<div class="form-group">
-								<label for="card-cvv">CVV</label>
-								<input type="text" id="card-cvv" name="card-cvv" placeholder="•••" autocomplete="cc-csc" maxlength="4" required>
-							</div>
-						</div>
-						<p class="secure-note">🔒 Your payment information is encrypted and secure.</p>
-						<button type="button" class="checkout-next-btn" id="to-review-btn">Review Order</button>
-					</form>
-				</section>
-
-				<!-- Review -->
-				<section class="checkout-card glass-panel locked-section" id="section-review">
-					<h2>Review Your Order</h2>
-					<div class="review-item-card">
-						<img src="../img/rendering1.jpeg" alt="Modular Living Room Table">
-						<div>
-							<p class="item-category">Living Room / Tables</p>
-							<h3>Modular Living Room Table</h3>
-							<p class="item-meta" id="review-item-qty">Solid oak veneer + powder-coated steel · Qty 1</p>
-						</div>
-						<p class="item-price" id="review-item-price">$899</p>
-					</div>
-
-					<div class="review-summary-lines">
-						<div class="summary-line">
-							<span>Subtotal</span>
-							<strong id="review-subtotal">$899</strong>
-						</div>
-						<div class="summary-line">
-							<span>Delivery</span>
-							<strong id="review-delivery">$215</strong>
-						</div>
-						<div class="summary-line">
-							<span>Shipping &amp; Handling</span>
-							<strong id="review-shipping">$55</strong>
-						</div>
-						<div class="summary-line">
-							<span>Estimated Tax</span>
-							<strong id="review-tax">$72</strong>
-						</div>
-						<div class="summary-line total-line">
-							<span>Total</span>
-							<strong id="review-total">$1,241</strong>
-						</div>
-					</div>
-
-					<button type="button" class="checkout-next-btn place-order-btn" id="place-order-btn">Place Order</button>
 				</section>
 
 			</div>
@@ -238,22 +177,13 @@
 						<li>2-year craftsmanship warranty</li>
 					</ul>
 				</div>
-				<a class="continue-shopping" href="../cart/index.html">← Back to Cart</a>
+				<div class="checkout-card glass-panel checkout-back-card">
+					<a class="continue-shopping checkout-back-link" href="../cart/index.html">← Back to Cart</a>
+				</div>
 			</aside>
 		</div>
 
 	</main>
-
-	<!-- Order Confirmation Modal -->
-	<div class="order-modal-overlay" id="order-modal" hidden>
-		<div class="order-modal glass-panel">
-			<div class="order-modal-icon">✓</div>
-			<h2>Order Confirmed!</h2>
-			<p>Thank you for your purchase. Your Modular Living Room Table is on its way. You'll receive a confirmation email shortly.</p>
-			<p class="order-number">Order #<strong>MLT-2026-00421</strong></p>
-			<a class="checkout-next-btn" href="../home/index.html">Back to Home</a>
-		</div>
-	</div>
 
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<script src="../javascript.js"></script>

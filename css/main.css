@@ -81,7 +81,7 @@ a { color: inherit; }
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    width: 100%;
+    width: calc(100% - 56px);
     border: 1px solid rgba(255, 255, 255, 0.35);
     border-radius: 18px;
     padding: 12px 14px;
@@ -100,8 +100,48 @@ a { color: inherit; }
     border-color: rgba(255, 255, 255, 0.18);
 }
 
+.nav-cart-link {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #FFFDF5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+    transition: transform 0.2s ease, background-color 0.25s ease;
+}
+
+.nav-cart-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.top-nav.is-scrolled .nav-cart-link {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+.nav-cart-link:hover {
+    background: rgba(255, 255, 255, 0.28);
+    transform: translateY(-1px);
+}
+
 .nav-toggle:focus-visible,
-.nav-link:focus-visible {
+.nav-link:focus-visible,
+.nav-cart-link:focus-visible {
     outline: 2px solid rgba(255, 255, 255, 0.9);
     outline-offset: 3px;
 }
@@ -178,6 +218,11 @@ a { color: inherit; }
     }
 
     .nav-toggle { display: none; }
+
+    .nav-cart-link {
+        position: static;
+        flex: 0 0 auto;
+    }
 
     .nav-links {
         display: flex;
@@ -1582,22 +1627,10 @@ p { font-size: 1.1rem; line-height: 1.6; margin-top: 0; }
 
 /* ── Checkout page ────────────────────────────────────────── */
 .checkout-page {
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(94, 58, 34, 0.26) 0%,
-            rgba(94, 58, 34, 0.16) 12%,
-            rgba(255, 255, 255, 0.06) 24%,
-            rgba(255, 255, 255, 0.8) 32%,
-            rgba(255, 255, 255, 0.98) 40%,
-            #ffffff 70%,
-            rgba(255, 255, 255, 0.2) 100%
-        ),
-        url('../img/woodbackground.jpeg');
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: 100% 100%, cover;
-    background-attachment: scroll, fixed;
+    background: url('../img/woodbackground.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .checkout-shell {
@@ -1916,6 +1949,23 @@ p { font-size: 1.1rem; line-height: 1.6; margin-top: 0; }
     top: 106px;
 }
 
+.checkout-back-card {
+    padding: 16px 20px;
+}
+
+.checkout-back-link {
+    margin-top: 0;
+    display: block;
+    color: #4A3328;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.checkout-back-link:hover {
+    color: #5C4438;
+    text-decoration: underline;
+}
+
 .sidebar-item {
     display: grid;
     grid-template-columns: 60px 1fr auto;
@@ -1963,6 +2013,7 @@ p { font-size: 1.1rem; line-height: 1.6; margin-top: 0; }
     justify-content: center;
     z-index: 2000;
     padding: 20px;
+    overflow: hidden;
 }
 
 .order-modal-overlay[hidden] {
@@ -1970,6 +2021,8 @@ p { font-size: 1.1rem; line-height: 1.6; margin-top: 0; }
 }
 
 .order-modal {
+    position: relative;
+    z-index: 2;
     max-width: 460px;
     width: 100%;
     border-radius: 28px;
@@ -1977,6 +2030,39 @@ p { font-size: 1.1rem; line-height: 1.6; margin-top: 0; }
     background: rgba(255, 255, 255, 0.92);
     box-shadow: 0 30px 60px rgba(60, 38, 26, 0.22);
     text-align: center;
+}
+
+.order-confetti {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.order-confetti-piece {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: var(--confetti-color, #f4b400);
+    opacity: 1;
+    animation: order-confetti-burst var(--burst-duration, 1.8s) cubic-bezier(0.16, 0.84, 0.25, 1) var(--burst-delay, 0s) forwards;
+}
+
+@keyframes order-confetti-burst {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.7) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--burst-x, 0px)), calc(-50% + var(--burst-y, 0px))) scale(1) rotate(var(--spin, 540deg));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .order-confetti-piece {
+        animation: none;
+    }
 }
 
 .order-modal-icon {
