@@ -346,6 +346,16 @@
                 } catch (e) {}
             }
 
+            function clearCheckoutData() {
+                try {
+                    window.localStorage.removeItem('checkoutShipping');
+                    window.localStorage.removeItem('checkoutPayment');
+                    window.localStorage.removeItem('checkoutDelivery');
+                    window.localStorage.removeItem('cartQty');
+                    window.localStorage.setItem('cartHasItem', 'false');
+                } catch (e) {}
+            }
+
             /* ── Step 1: Shipping ── */
             if ($('.checkout-shipping').length) {
                 // Restore saved shipping fields
@@ -498,6 +508,7 @@
                 $('#review-total').text(checkoutFormatter.format(p.total));
 
                 $('#place-order-btn').on('click', function () {
+                    clearCheckoutData();
                     $('#order-modal').removeAttr('hidden');
                     showOrderConfetti();
                 });
