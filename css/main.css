@@ -1240,6 +1240,12 @@ p { font-size: 1.1rem; line-height: 1.6; margin-top: 0; }
     gap: 24px;
 }
 
+.bi-shell h1,
+.bi-shell h2,
+.bi-shell p {
+    color: #F0E9E1;
+}
+
 /* Executive Summary */
 .bi-exec-summary {
     border-radius: 32px;
