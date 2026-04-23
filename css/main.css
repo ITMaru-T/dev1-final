@@ -928,6 +928,7 @@ a { color: inherit; }
     background: #5C4438;
     color: #FFFDF5 !important;
     font-size: 1.05rem;
+    box-sizing: border-box;
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
@@ -1200,6 +1201,19 @@ p { font-size: 1.1rem; line-height: 1.6; margin-top: 0; }
 /* ═══════════════════════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 980px) {
+    .purchase-row {
+        grid-template-columns: auto 84px;
+        row-gap: 12px;
+    }
+
+    .retail-buy-button {
+        grid-column: 1 / -1;
+        width: 100%;
+        padding: 13px 16px;
+    }
+}
+
 @media (max-width: 900px) {
     .render-slider { gap: 12px; }
 
