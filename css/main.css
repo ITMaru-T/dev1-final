@@ -56,7 +56,7 @@ a { color: inherit; }
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: 0;
     padding: 12px;
     border-radius: 24px;
     background: rgba(255, 255, 255, 0.2);
@@ -66,7 +66,7 @@ a { color: inherit; }
     -webkit-backdrop-filter: blur(14px);
     z-index: 1000;
     /* smooth transition between transparent and scrolled states */
-    transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, top 0.35s ease;
+    transition: background 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease, top 0.45s ease;
 }
 
 /* Scrolled state — solid dark warm background ensures white text is always readable */
@@ -92,12 +92,26 @@ a { color: inherit; }
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transition: background 0.25s ease;
+    transition: background 0.35s ease, border-color 0.35s ease, transform 0.3s ease, box-shadow 0.35s ease;
 }
 
 .top-nav.is-scrolled .nav-toggle {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.18);
+}
+
+.nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.24);
+}
+
+.nav-toggle:active {
+    transform: scale(0.98);
+}
+
+.top-nav.is-open .nav-toggle {
+    background: rgba(255, 255, 255, 0.26);
+    border-color: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
 }
 
 .nav-cart-link {
@@ -164,18 +178,49 @@ a { color: inherit; }
     height: 2px;
     border-radius: 999px;
     background: currentColor;
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
 }
 
 .nav-links {
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 8px;
     width: 100%;
     overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-8px);
+    visibility: hidden;
+    pointer-events: none;
+    transition: max-height 0.52s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.38s ease, transform 0.42s ease;
 }
 
-.top-nav.is-open .nav-links { display: flex; }
-.top-nav.is-open { border-radius: 24px; }
+.top-nav.is-open .nav-links {
+    max-height: 340px;
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.top-nav.is-open {
+    gap: 10px;
+    border-radius: 24px;
+}
+
+.top-nav.is-open .nav-toggle-icon span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.top-nav.is-open .nav-toggle-icon span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0.2);
+}
+
+.top-nav.is-open .nav-toggle-icon span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}
 
 .nav-link {
     text-decoration: none;
@@ -230,6 +275,13 @@ a { color: inherit; }
         align-items: center;
         gap: 8px;
         width: auto;
+        max-height: none;
+        opacity: 1;
+        transform: none;
+        visibility: visible;
+        pointer-events: auto;
+        overflow: visible;
+        transition: none;
     }
 
     .nav-link {
