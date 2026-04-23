@@ -1889,8 +1889,8 @@ p { font-size: 1.1rem; line-height: 1.6; margin-top: 0; }
     border-radius: 14px;
     padding: 14px 16px;
     cursor: pointer;
-    background: #fff;
-    transition: border-color 0.2s ease, background 0.2s ease;
+    background: rgba(92, 68, 56, 0.08);
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .delivery-option input[type="radio"] {
@@ -1903,7 +1903,8 @@ p { font-size: 1.1rem; line-height: 1.6; margin-top: 0; }
 
 .delivery-option.selected {
     border-color: #5C4438;
-    background: rgba(92, 68, 56, 0.05);
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(92, 68, 56, 0.08);
 }
 
 .delivery-info {

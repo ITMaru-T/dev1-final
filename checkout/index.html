@@ -60,11 +60,11 @@
 						<div class="form-row two-col">
 							<div class="form-group">
 								<label for="first-name">First Name</label>
-								<input type="text" id="first-name" name="first-name" placeholder="Jane" autocomplete="given-name" required>
+								<input type="text" id="first-name" name="first-name" placeholder="Jane" autocomplete="given-name" pattern="[A-Za-z]+([ .'-][A-Za-z]+)*\.?" required>
 							</div>
 							<div class="form-group">
 								<label for="last-name">Last Name</label>
-								<input type="text" id="last-name" name="last-name" placeholder="Smith" autocomplete="family-name" required>
+								<input type="text" id="last-name" name="last-name" placeholder="Smith" autocomplete="family-name" pattern="[A-Za-z]+([ .'-][A-Za-z]+)*\.?" required>
 							</div>
 						</div>
 						<div class="form-group">
@@ -73,7 +73,7 @@
 						</div>
 						<div class="form-group">
 							<label for="phone">Phone Number</label>
-							<input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" autocomplete="tel">
+							<input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" autocomplete="tel" inputmode="numeric" pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}" maxlength="14" required>
 						</div>
 						<div class="form-group">
 							<label for="address">Street Address</label>

@@ -59,7 +59,7 @@
 					<form class="checkout-form" id="payment-form" novalidate>
 						<div class="form-group">
 							<label for="card-name">Name on Card</label>
-							<input type="text" id="card-name" name="card-name" placeholder="Jane Smith" autocomplete="cc-name" required>
+							<input type="text" id="card-name" name="card-name" placeholder="Jane Smith" autocomplete="cc-name" pattern="[A-Za-z]+([ .'-][A-Za-z]+)*\.?" required>
 						</div>
 						<div class="form-group card-number-group">
 							<label for="card-number">Card Number</label>
@@ -73,7 +73,7 @@
 							</div>
 							<div class="form-group">
 								<label for="card-cvv">CVV</label>
-								<input type="text" id="card-cvv" name="card-cvv" placeholder="•••" autocomplete="cc-csc" maxlength="4" required>
+								<input type="text" id="card-cvv" name="card-cvv" placeholder="•••" autocomplete="cc-csc" inputmode="numeric" pattern="[0-9]{3,4}" maxlength="4" required>
 							</div>
 						</div>
 						<p class="secure-note">🔒 Your payment information is encrypted and secure.</p>

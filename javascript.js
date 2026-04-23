@@ -279,21 +279,59 @@
                 $('#sidebar-total').text(checkoutFormatter.format(p.total));
             }
 
+            function isNameField($field) {
+                return $field.is('#first-name, #last-name, #card-name');
+            }
+
+            function isValidName(value) {
+                return /^[A-Za-z]+([ .'-][A-Za-z]+)*\.?$/.test(value);
+            }
+
             function validateSection($section) {
                 let valid = true;
                 $section.find('input[required], select[required]').each(function () {
-                    if (!$(this).val().trim()) {
-                        $(this).addClass('invalid');
+                    const $field = $(this);
+                    const value = $field.val().trim();
+
+                    if (!value) {
+                        $field.addClass('invalid');
                         valid = false;
-                    } else {
-                        $(this).removeClass('invalid');
+                        return;
                     }
+
+                    if ($field.is('#phone') && value.replace(/\D/g, '').length !== 10) {
+                        $field.addClass('invalid');
+                        valid = false;
+                        return;
+                    }
+
+                    if (isNameField($field) && !isValidName(value)) {
+                        $field.addClass('invalid');
+                        valid = false;
+                        return;
+                    }
+
+                    if ($field.is('#card-cvv') && !/^\d{3,4}$/.test(value)) {
+                        $field.addClass('invalid');
+                        valid = false;
+                        return;
+                    }
+
+                    $field.removeClass('invalid');
                 });
                 return valid;
             }
 
             $('input').on('input', function () {
-                if ($(this).val().trim()) { $(this).removeClass('invalid'); }
+                const $field = $(this);
+                const value = $field.val().trim();
+
+                if (!value) return;
+                if ($field.is('#phone') && value.replace(/\D/g, '').length !== 10) return;
+                if (isNameField($field) && !isValidName(value)) return;
+                if ($field.is('#card-cvv') && !/^\d{3,4}$/.test(value)) return;
+
+                $field.removeClass('invalid');
             });
 
             // Generic helpers for saving/restoring form fields
@@ -361,6 +399,27 @@
                 // Restore saved shipping fields
                 restoreFormFromStorage('shipping-form', 'checkoutShipping');
 
+                function formatPhoneDisplay(digits) {
+                    const cleaned = String(digits || '').replace(/\D/g, '').substring(0, 10);
+                    if (!cleaned.length) return '';
+                    if (cleaned.length < 4) return '(' + cleaned;
+                    if (cleaned.length < 7) return '(' + cleaned.substring(0, 3) + ') ' + cleaned.substring(3);
+                    return '(' + cleaned.substring(0, 3) + ') ' + cleaned.substring(3, 6) + '-' + cleaned.substring(6);
+                }
+
+                const $phone = $('#phone');
+                if ($phone.length) {
+                    $phone.val(formatPhoneDisplay($phone.val()));
+                }
+
+                $phone.on('input', function () {
+                    const digitsOnly = $(this).val().replace(/\D/g, '').substring(0, 10);
+                    $(this).val(formatPhoneDisplay(digitsOnly));
+                    if (digitsOnly.length === 10) {
+                        $(this).removeClass('invalid');
+                    }
+                });
+
                 // Use radio state if restored from storage
                 const restoredDelivery = $('input[name="delivery"]:checked').val();
                 if (restoredDelivery) {
@@ -419,6 +478,14 @@
                     let val = $(this).val().replace(/\D/g, '').substring(0, 16);
                     val = val.replace(/(.{4})/g, '$1 ').trim();
                     $(this).val(val);
+                });
+
+                $('#card-cvv').on('input', function () {
+                    const digitsOnly = $(this).val().replace(/\D/g, '').substring(0, 4);
+                    $(this).val(digitsOnly);
+                    if (/^\d{3,4}$/.test(digitsOnly)) {
+                        $(this).removeClass('invalid');
+                    }
                 });
 
                 // Expiry formatting
