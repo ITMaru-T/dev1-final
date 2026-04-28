@@ -19,6 +19,45 @@
         $(window).on('scroll', updateNavOnScroll);
         updateNavOnScroll(); // run once immediately on page load
 
+        // ─── Nav cart quantity badge ───────────────────────────────────────
+        var $navCartLinks = $('.nav-cart-link');
+
+        function getStoredCartQty() {
+            try {
+                var hasItem = window.localStorage.getItem('cartHasItem') === 'true';
+                if (!hasItem) return 0;
+                var qty = parseInt(window.localStorage.getItem('cartQty'), 10);
+                return Number.isFinite(qty) && qty > 0 ? qty : 0;
+            } catch (e) {
+                return 0;
+            }
+        }
+
+        function updateNavCartIndicator() {
+            if (!$navCartLinks.length) return;
+
+            var qty = getStoredCartQty();
+            $navCartLinks.each(function () {
+                var $link = $(this);
+                var $badge = $link.find('.nav-cart-count');
+                if (!$badge.length) {
+                    $badge = $('<span class="nav-cart-count" aria-hidden="true" hidden></span>');
+                    $link.append($badge);
+                }
+
+                if (qty > 0) {
+                    $badge.text(qty > 99 ? '99+' : String(qty)).removeAttr('hidden');
+                    $link.addClass('has-count').attr('aria-label', 'Go to cart (' + qty + ' item' + (qty === 1 ? '' : 's') + ')');
+                } else {
+                    $badge.text('').attr('hidden', true);
+                    $link.removeClass('has-count').attr('aria-label', 'Go to cart');
+                }
+            });
+        }
+
+        updateNavCartIndicator();
+        $(window).on('storage', updateNavCartIndicator);
+
         // ─── Mobile hamburger toggle ─────────────────────────────────────────
         $nav.each(function () {
             var $n      = $(this);
@@ -126,6 +165,7 @@
                     window.localStorage.setItem('cartQty', String(qty));
                     window.localStorage.setItem('cartHasItem', 'true');
                 } catch (e) {}
+                updateNavCartIndicator();
             });
         }
 
@@ -217,6 +257,7 @@
                 try {
                     window.localStorage.setItem('cartQty', String(Math.max(parseInt($cartQty.val(), 10) || 1, 1)));
                 } catch (e) {}
+                updateNavCartIndicator();
             });
 
             $removeItem.on('click', function (e) {
@@ -228,6 +269,7 @@
                 } catch (e) {}
                 syncCartVisibility();
                 updateCartTotals();
+                updateNavCartIndicator();
             });
 
             $checkoutButton.on('click', function (e) {
@@ -287,6 +329,10 @@
                 return /^[A-Za-z]+([ .'-][A-Za-z]+)*\.?$/.test(value);
             }
 
+            function isValidEmail(value) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+            }
+
             function validateSection($section) {
                 let valid = true;
                 $section.find('input[required], select[required]').each(function () {
@@ -311,6 +357,12 @@
                         return;
                     }
 
+                    if ($field.is('#email') && !isValidEmail(value)) {
+                        $field.addClass('invalid');
+                        valid = false;
+                        return;
+                    }
+
                     if ($field.is('#card-cvv') && !/^\d{3,4}$/.test(value)) {
                         $field.addClass('invalid');
                         valid = false;
@@ -329,6 +381,7 @@
                 if (!value) return;
                 if ($field.is('#phone') && value.replace(/\D/g, '').length !== 10) return;
                 if (isNameField($field) && !isValidName(value)) return;
+                if ($field.is('#email') && !isValidEmail(value)) return;
                 if ($field.is('#card-cvv') && !/^\d{3,4}$/.test(value)) return;
 
                 $field.removeClass('invalid');
@@ -392,6 +445,7 @@
                     window.localStorage.removeItem('cartQty');
                     window.localStorage.setItem('cartHasItem', 'false');
                 } catch (e) {}
+                updateNavCartIndicator();
             }
 
             /* ── Step 1: Shipping ── */
