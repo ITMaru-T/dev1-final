@@ -1821,7 +1821,7 @@ p { font-size: 1rem; line-height: 1.75; color: var(--text-secondary); }
     .about-hero,
     .team-section,
     .bi-exec-summary,
-    .bi-cta-section { padding: 24px; border-radius: var(--radius-lg); }
+    .bi-cta-section { padding: 24px 24px 12px 24px; border-radius: var(--radius-lg); }
 
     .team-grid-centered { margin: 20px auto 20px; }
 
