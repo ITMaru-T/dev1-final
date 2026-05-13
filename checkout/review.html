@@ -151,7 +151,103 @@
 		</div>
 	</div>
 
+	<!-- Confetti canvas (sits above everything, pointer-events none) -->
+	<canvas id="confetti-canvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
+
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<script src="../javascript.js"></script>
-</body>
+	<script>
+	// ── Confetti ────────────────────────────────────────────────────────────
+	(function () {
+		const canvas = document.getElementById('confetti-canvas');
+		const ctx    = canvas.getContext('2d');
+		let pieces   = [];
+		let raf      = null;
+		let running  = false;
+
+		// Brand palette + a couple of celebratory accents
+		const COLORS = ['#C49A6C','#8B6840','#2C2420','#E8E1D6','#F5F2ED','#b8907a','#d4b09a','#7a5646'];
+
+		function resize() {
+			canvas.width  = window.innerWidth;
+			canvas.height = window.innerHeight;
+		}
+		window.addEventListener('resize', resize);
+		resize();
+
+		function randomBetween(a, b) { return a + Math.random() * (b - a); }
+
+		function spawn(count) {
+			const cx = canvas.width / 2;
+			for (let i = 0; i < count; i++) {
+				const angle = randomBetween(-Math.PI * 0.9, -Math.PI * 0.1); // upward arc
+				const speed = randomBetween(6, 18);
+				pieces.push({
+					x:     cx + randomBetween(-canvas.width * 0.3, canvas.width * 0.3),
+					y:     canvas.height + 10,
+					vx:    Math.cos(angle) * speed * randomBetween(0.4, 1),
+					vy:    Math.sin(angle) * speed,
+					w:     randomBetween(7, 14),
+					h:     randomBetween(4, 9),
+					rot:   randomBetween(0, Math.PI * 2),
+					rVel:  randomBetween(-0.18, 0.18),
+					color: COLORS[Math.floor(Math.random() * COLORS.length)],
+					alpha: 1,
+					shape: Math.random() > 0.4 ? 'rect' : 'circle',
+					gravity: randomBetween(0.25, 0.55),
+					drag:    randomBetween(0.97, 0.995),
+				});
+			}
+		}
+
+		function tick() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			let alive = false;
+			for (const p of pieces) {
+				p.vy   += p.gravity;
+				p.vx   *= p.drag;
+				p.vy   *= p.drag;
+				p.x    += p.vx;
+				p.y    += p.vy;
+				p.rot  += p.rVel;
+				// fade out when falling below 80% of screen
+				if (p.y > canvas.height * 0.8) p.alpha -= 0.022;
+				if (p.alpha <= 0) continue;
+				alive = true;
+
+				ctx.save();
+				ctx.globalAlpha = Math.max(0, p.alpha);
+				ctx.translate(p.x, p.y);
+				ctx.rotate(p.rot);
+				ctx.fillStyle = p.color;
+				if (p.shape === 'circle') {
+					ctx.beginPath();
+					ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
+					ctx.fill();
+				} else {
+					ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+				}
+				ctx.restore();
+			}
+
+			pieces = pieces.filter(p => p.alpha > 0);
+
+			if (alive || running) {
+				raf = requestAnimationFrame(tick);
+			} else {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+			}
+		}
+
+		// Burst: two waves for a full effect
+		window.fireConfetti = function () {
+			resize();
+			running = true;
+			spawn(120);
+			setTimeout(() => { spawn(80); }, 280);
+			setTimeout(() => { spawn(60); running = false; }, 600);
+			if (!raf) raf = requestAnimationFrame(tick);
+		};
+	})();
+	</script>
 </html>

@@ -29,25 +29,38 @@
     </nav>
 </header>
 
-    <section class="render-slider">
-        <button class="slider-control" id="prev-slide">&#10094;</button>
+    <section class="video-hero" aria-label="Stratus hero">
+        <!-- Drop your video file at ../video/hero.mp4 — the poster image shows while it loads -->
+        <video
+            class="hero-video"
+            src="../video/stratus.mov"
+            poster="../img/rendering1.jpeg"
+            autoplay
+            muted
+            loop
+            playsinline
+            aria-hidden="true"
+        ></video>
 
-        <div class="render-track" id="render-track">
-            <figure class="render-card" data-index="0">
-                <img src="../img/rendering1.jpeg" alt="Rendering 1">
-            </figure>
-            <figure class="render-card" data-index="1">
-                <img src="../img/rendering2.jpeg" alt="Rendering 2">
-            </figure>
-            <figure class="render-card" data-index="2">
-                <img src="../img/rendering3.jpeg" alt="Rendering 3">
-            </figure>
-            <figure class="render-card" data-index="3">
-                <img src="../img/rendering4.jpeg" alt="Rendering 4">
-            </figure>
+        <!-- Layered overlay: dark gradient + subtle noise texture -->
+        <div class="hero-overlay" aria-hidden="true"></div>
+
+        <!-- Hero content -->
+        <div class="hero-content">
+            <span class="hero-eyebrow">Introducing</span>
+            <h1 class="hero-wordmark">Stratus</h1>
+            <p class="hero-tagline">Built for style, comfort, and everyday performance.</p>
+            <div class="hero-actions">
+                <a class="hero-cta" href="../purchase/index.html">Shop Now</a>
+                <a class="hero-secondary" href="#features">Explore Features</a>
+            </div>
         </div>
 
-        <button class="slider-control" id="next-slide">&#10095;</button>
+        <!-- Scroll indicator -->
+        <button class="hero-scroll-hint" id="hero-scroll-btn" aria-label="Scroll to content">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </button>
     </section>
 
     <main class="home-sections">
@@ -86,9 +99,6 @@
                 </figure>
                 <figure class="photo-card glass-panel">
                     <img src="../img/rendering3.jpeg" alt="Wide rendering composition">
-                </figure>
-                <figure class="photo-card glass-panel">
-                    <img src="../img/rendering4.jpeg" alt="Alternate rendering showcase">
                 </figure>
             </div>
         </section>

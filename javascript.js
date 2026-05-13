@@ -169,6 +169,21 @@
             });
         }
 
+        // Retail gallery thumbnails
+        var $galleryMainImage = $('.gallery-main img');
+        var $galleryThumbs    = $('.gallery-thumbs img');
+        if ($galleryMainImage.length && $galleryThumbs.length) {
+            $galleryThumbs.on('click', function () {
+                var $thumb = $(this);
+                $galleryMainImage.attr({
+                    src: $thumb.attr('src'),
+                    alt: $thumb.attr('alt')
+                });
+                $galleryThumbs.removeClass('is-active').removeAttr('aria-current');
+                $thumb.addClass('is-active').attr('aria-current', 'true');
+            });
+        }
+
         // ─── Cart page ────────────────────────────────────────────────────────
         var $cartQty = $('#cart-qty');
         if ($cartQty.length) {
@@ -615,6 +630,10 @@
                     }
 
                     $modalOverlay.append($confettiLayer);
+                    // Also fire the full-screen canvas confetti if available
+                    if (typeof window.fireConfetti === 'function') {
+                        window.fireConfetti();
+                    }
                     window.setTimeout(function () {
                         $confettiLayer.remove();
                     }, 2800);
@@ -637,3 +656,15 @@
         }
     });
 })(jQuery);
+
+// ─── Hero scroll hint ────────────────────────────────────────────────────────
+(function () {
+    var btn = document.getElementById('hero-scroll-btn');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+        var target = document.querySelector('.home-sections');
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+})();

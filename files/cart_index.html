@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stratus — Cart</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body class="cart-page">
+    <header class="site-header">
+        <nav class="top-nav">
+            <button class="nav-toggle" type="button">
+                <span class="nav-toggle-label">Menu</span>
+                <span class="nav-toggle-icon"><span></span><span></span><span></span></span>
+            </button>
+            <div class="nav-links" id="primary-navigation">
+                <a class="nav-link" href="../home/index.html">Home</a>
+                <a class="nav-link" href="../purchase/index.html">Purchase</a>
+                <a class="nav-link" href="../about/index.html">About</a>
+                <a class="nav-link" href="../business-insights/index.html">Business Insights</a>
+            </div>
+            <a class="nav-cart-link" href="../cart/index.html" aria-label="Go to cart" title="Cart">
+                <svg class="nav-cart-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M3 5h2l2.1 9h8.7l2.2-6.5H7.4"></path>
+                    <circle cx="10" cy="18" r="1.6"></circle>
+                    <circle cx="16" cy="18" r="1.6"></circle>
+                </svg>
+            </a>
+        </nav>
+    </header>
+
+    <main class="cart-shell">
+        <section class="cart-header">
+            <span class="eyebrow">Shopping Cart</span>
+            <h1>Your Cart</h1>
+            <p>Review your items and continue to secure checkout.</p>
+        </section>
+
+        <section class="cart-layout">
+            <div class="cart-items glass-panel">
+                <h2 id="cart-items-count">Items (1)</h2>
+
+                <article class="cart-item-card" id="cart-item-card">
+                    <img src="../img/rendering1.jpeg" alt="Modular Living Room Table in oak finish">
+                    <div class="cart-item-copy">
+                        <p class="item-category">Living Room / Tables</p>
+                        <h3>Modular Living Room Table</h3>
+                        <p class="item-meta">Solid oak veneer + powder-coated steel · 48 in x 30 in x 16 in</p>
+                        <p class="item-stock">In stock · Ships in 2–4 business days</p>
+
+                        <div class="item-actions">
+                            <label for="cart-qty">Qty</label>
+                            <select id="cart-qty" name="cart-qty">
+                                <option value="1" selected>1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                            <a href="../purchase/index.html">Edit</a>
+                            <a href="#" id="cart-remove-item">Remove</a>
+                        </div>
+                    </div>
+                    <p class="item-price" id="cart-item-total">$899</p>
+                </article>
+
+                <div class="empty-cart-state" id="empty-cart-state" hidden>
+                    <h3>Your cart is empty</h3>
+                    <p>Looks like you removed your item. Add the modular living room table again when you're ready.</p>
+                    <a class="buy-button retail-buy-button" href="../purchase/index.html">Return to Product</a>
+                </div>
+            </div>
+
+            <aside class="order-summary glass-panel">
+                <h2>Order Summary</h2>
+                <div class="summary-line">
+                    <span>Subtotal</span>
+                    <strong id="summary-subtotal">$899</strong>
+                </div>
+                <div class="summary-line">
+                    <span>Delivery</span>
+                    <strong id="summary-delivery">$215</strong>
+                </div>
+                <div class="summary-line">
+                    <span>Shipping &amp; Handling</span>
+                    <strong id="summary-shipping">$55</strong>
+                </div>
+                <div class="summary-line">
+                    <span>Estimated Tax</span>
+                    <strong id="summary-tax">$72</strong>
+                </div>
+                <div class="summary-line total-line">
+                    <span>Total</span>
+                    <strong id="summary-total">$1,241</strong>
+                </div>
+
+                <a class="checkout-button" href="../checkout/index.html">Proceed to Checkout</a>
+                <a class="continue-shopping" href="../purchase/index.html">Continue Shopping</a>
+
+                <ul class="summary-points">
+                    <li>Secure encrypted checkout</li>
+                    <li>30-day risk-free returns</li>
+                    <li>2-year craftsmanship warranty</li>
+                </ul>
+            </aside>
+        </section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../javascript.js"></script>
+</body>
+</html>
