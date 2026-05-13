@@ -725,6 +725,11 @@
                 $('#review-total').text(checkoutFormatter.format(p.total));
 
                 $('#place-order-btn').on('click', function () {
+                    // Generate random order number
+                    const randomNum = Math.floor(Math.random() * 90000) + 10000; // 5-digit number
+                    const orderNumber = `MLT-2026-${randomNum}`;
+                    $('.order-number strong').text(orderNumber);
+                    
                     clearCheckoutData();
                     $('#order-modal').removeAttr('hidden');
                     showOrderConfetti();

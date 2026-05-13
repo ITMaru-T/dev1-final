@@ -145,14 +145,14 @@
 		<div class="order-modal glass-panel">
 			<div class="order-modal-icon">✓</div>
 			<h2>Order Confirmed!</h2>
-			<p>Thank you for your purchase. Your Modular Living Room Table is on its way. You'll receive a confirmation email shortly.</p>
-			<p class="order-number">Order #<strong>MLT-2026-00421</strong></p>
+			<p>Thank you for your purchase. Your Stratus Table is on its way. You'll receive a confirmation email shortly.</p>
+			<p class="order-number">Order #<strong>STR-2026-00421</strong></p>
 			<a class="checkout-next-btn" href="../home/index.html">Back to Home</a>
 		</div>
 	</div>
 
 	<!-- Confetti canvas (sits above everything, pointer-events none) -->
-	<canvas id="confetti-canvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
+	<canvas id="confetti-canvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1999;"></canvas>
 
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<script src="../javascript.js"></script>
@@ -166,35 +166,36 @@
 		let running  = false;
 
 		// Brand palette + a couple of celebratory accents
-		const COLORS = ['#C49A6C','#8B6840','#2C2420','#E8E1D6','#F5F2ED','#b8907a','#d4b09a','#7a5646'];
+		const COLORS = ['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#98D8C8','#F7DC6F','#BB8FCE','#85C1E9'];
 
 		function resize() {
 			canvas.width  = window.innerWidth;
 			canvas.height = window.innerHeight;
+			ctx.imageSmoothingEnabled = false;
 		}
 		window.addEventListener('resize', resize);
 		resize();
 
 		function randomBetween(a, b) { return a + Math.random() * (b - a); }
 
-		function spawn(count) {
-			const cx = canvas.width / 2;
+		function spawn(count, cx, cy) {
 			for (let i = 0; i < count; i++) {
-				const angle = randomBetween(-Math.PI * 0.9, -Math.PI * 0.1); // upward arc
+				const angle = randomBetween(0, Math.PI * 2); // all directions
 				const speed = randomBetween(6, 18);
 				pieces.push({
-					x:     cx + randomBetween(-canvas.width * 0.3, canvas.width * 0.3),
-					y:     canvas.height + 10,
+					x:     cx,
+					y:     cy,
 					vx:    Math.cos(angle) * speed * randomBetween(0.4, 1),
 					vy:    Math.sin(angle) * speed,
-					w:     randomBetween(7, 14),
-					h:     randomBetween(4, 9),
+					w:     randomBetween(12, 20),
+					h:     randomBetween(8, 15),
 					rot:   randomBetween(0, Math.PI * 2),
 					rVel:  randomBetween(-0.18, 0.18),
 					color: COLORS[Math.floor(Math.random() * COLORS.length)],
 					alpha: 1,
+					lifetime: randomBetween(120, 180), // frames
 					shape: Math.random() > 0.4 ? 'rect' : 'circle',
-					gravity: randomBetween(0.25, 0.55),
+					gravity: 0,
 					drag:    randomBetween(0.97, 0.995),
 				});
 			}
@@ -204,14 +205,13 @@
 			ctx.clearRect(0, 0, canvas.width, canvas.height);
 			let alive = false;
 			for (const p of pieces) {
-				p.vy   += p.gravity;
 				p.vx   *= p.drag;
 				p.vy   *= p.drag;
 				p.x    += p.vx;
 				p.y    += p.vy;
 				p.rot  += p.rVel;
-				// fade out when falling below 80% of screen
-				if (p.y > canvas.height * 0.8) p.alpha -= 0.022;
+				p.lifetime--;
+				if (p.lifetime <= 60) p.alpha -= 0.02; // fade in last 60 frames
 				if (p.alpha <= 0) continue;
 				alive = true;
 
@@ -243,9 +243,11 @@
 		window.fireConfetti = function () {
 			resize();
 			running = true;
-			spawn(120);
-			setTimeout(() => { spawn(80); }, 280);
-			setTimeout(() => { spawn(60); running = false; }, 600);
+			const cx = canvas.width / 2;
+			const cy = canvas.height / 2;
+			spawn(120, cx, cy);
+			setTimeout(() => { spawn(80, cx, cy); }, 280);
+			setTimeout(() => { spawn(60, cx, cy); running = false; }, 600);
 			if (!raf) raf = requestAnimationFrame(tick);
 		};
 	})();
