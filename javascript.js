@@ -2,21 +2,98 @@
     $(function () {
 
         // ─── Scroll-aware nav ────────────────────────────────────────────────
-        // The nav starts transparent (great over the dark wood header).
-        // Once the user scrolls past 80 px it transitions to a solid dark-warm
-        // background so text stays readable over the white content sections.
+        // The nav should use a light tone over dark page artwork, and switch to
+        // a darker tone when the page content below it becomes lighter.
         var $nav = $('.top-nav');
-        var SCROLL_THRESHOLD = 80;
+        var $hero = $('.video-hero');
+
+        function getEffectiveBgColor(element) {
+            while (element && element !== document.documentElement) {
+                var style = window.getComputedStyle(element);
+                var bg = style.backgroundColor;
+                if (bg && bg !== 'transparent' && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'inherit') {
+                    return bg;
+                }
+                element = element.parentElement;
+            }
+            return window.getComputedStyle(document.body).backgroundColor || 'rgb(255, 255, 255)';
+        }
+
+        function parseRgb(colorString) {
+            var match = colorString.match(/rgba?\(([^)]+)\)/i);
+            if (!match) return null;
+            var parts = match[1].split(',').map(function (part) { return parseFloat(part.trim()); });
+            return {
+                r: parts[0] || 0,
+                g: parts[1] || 0,
+                b: parts[2] || 0,
+                a: parts[3] === undefined ? 1 : parts[3]
+            };
+        }
+
+        function getLuminance(rgb) {
+            function channel(v) {
+                v = v / 255;
+                return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+            }
+            return 0.2126 * channel(rgb.r) + 0.7152 * channel(rgb.g) + 0.0722 * channel(rgb.b);
+        }
+
+        function isDarkBackground(colorString) {
+            var rgb = parseRgb(colorString);
+            if (!rgb) return false;
+            return getLuminance(rgb) < 0.55;
+        }
+
+        function elementBelowNav(x, y) {
+            var elements = document.elementsFromPoint(x, y);
+            for (var i = 0; i < elements.length; i += 1) {
+                if (!elements[i].closest || !elements[i].closest('.top-nav')) {
+                    return elements[i];
+                }
+            }
+            return null;
+        }
 
         function updateNavOnScroll() {
-            if (window.scrollY > SCROLL_THRESHOLD) {
-                $nav.addClass('is-scrolled');
-            } else {
+            var navRect = $nav[0].getBoundingClientRect();
+
+            if ($hero.length) {
+                var heroRect = $hero[0].getBoundingClientRect();
+                var navOverHero = heroRect.bottom > navRect.top && heroRect.top < navRect.bottom;
+                if (navOverHero) {
+                    $nav.removeClass('is-scrolled');
+                    return;
+                }
+            }
+
+            var sampleY = Math.min(navRect.bottom + 4, window.innerHeight - 1);
+            var sampleXs = [navRect.left + navRect.width * 0.25, navRect.left + navRect.width * 0.5, navRect.left + navRect.width * 0.75];
+            var darkCount = 0;
+            var sampleCount = 0;
+
+            sampleXs.forEach(function (x) {
+                if (x < 0 || x > window.innerWidth || sampleY < 0) return;
+                var element = elementBelowNav(x, sampleY);
+                if (!element) return;
+                var bgColor = getEffectiveBgColor(element);
+                if (bgColor) {
+                    sampleCount += 1;
+                    if (isDarkBackground(bgColor)) {
+                        darkCount += 1;
+                    }
+                }
+            });
+
+            var isDarkUnderneath = sampleCount > 0 ? darkCount >= Math.ceil(sampleCount / 2) : false;
+            if (isDarkUnderneath) {
                 $nav.removeClass('is-scrolled');
+            } else {
+                $nav.addClass('is-scrolled');
             }
         }
 
-        $(window).on('scroll', updateNavOnScroll);
+        $(window).on('scroll resize', updateNavOnScroll);
         updateNavOnScroll(); // run once immediately on page load
 
         // ─── Nav cart quantity badge ───────────────────────────────────────

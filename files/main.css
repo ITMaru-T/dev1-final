@@ -70,11 +70,11 @@ p { font-size: 1rem; line-height: 1.75; color: var(--text-secondary); }
 .eyebrow {
     display: inline-block;
     font-family: 'Jost', sans-serif;
-    font-weight: 200;
-    font-size: 0.625rem;
+    font-weight: 400;
+    font-size: 0.8rem;
     letter-spacing: 0.38em;
     text-transform: uppercase;
-    color: var(--ash-light);
+    color: var(--bark);
     margin-bottom: 14px;
 }
 
